@@ -1,0 +1,24 @@
+[
+  {
+    "year": 2021,
+    "anitsayac_total": 434,
+    "platform_femicide_total": 280,
+    "suspicious_deaths": 217,
+    "description": "2021 yılı Anıt Sayaç ve Platform Veri Arşivi"
+  },
+  { "id": "2021-01", "year": 2021, "month": "Yıllık", "city": "İstanbul", "district": "Kadıköy", "lat": 40.9901, "lng": 29.0264, "status": "Cinayet", "motive": "Ayrılma İsteği", "victim": "Tuba Kızıloğlu", "color": "#38bdf8", "text": "İstanbul'da katledildi." },
+  { "id": "2021-02", "year": 2021, "month": "Yıllık", "city": "İstanbul", "district": "Şişli", "lat": 41.0602, "lng": 28.9877, "status": "Cinayet", "motive": "Kıskançlık", "victim": "Aynur Karagün", "color": "#38bdf8", "text": "İstanbul'da katledildi." },
+  { "id": "2021-03", "year": 2021, "month": "Yıllık", "city": "Ankara", "district": "Çankaya", "lat": 39.9208, "lng": 32.8541, "status": "Cinayet", "motive": "Boşanma Kararı", "victim": "Eda Evi", "color": "#38bdf8", "text": "Ankara'da katledildi." },
+  { "id": "2021-04", "year": 2021, "month": "Yıllık", "city": "İzmir", "district": "Konak", "lat": 38.4192, "lng": 27.1287, "status": "Şüpheli Ölüm", "motive": "Şüpheli Vaka", "victim": "Fadime Koca", "color": "#38bdf8", "text": "İzmir'de şüpheli şekilde ölü bulundu." },
+  { "id": "2021-05", "year": 2021, "month": "Yıllık", "city": "Bursa", "district": "Nilüfer", "lat": 40.2167, "lng": 28.9833, "status": "Cinayet", "motive": "Ayrılma Talebi", "victim": "Fatma Solak", "color": "#38bdf8", "text": "Bursa'da katledildi." },
+  { "id": "2021-06", "year": 2021, "month": "Yıllık", "city": "Antalya", "district": "Muratpaşa", "lat": 36.8841, "lng": 30.7056, "status": "Şüpheli Ölüm", "motive": "Yüksekten Düşme", "victim": "Nuray Demir", "color": "#38bdf8", "text": "Antalya'da şüpheli şekilde yaşamını yitirdi." },
+  { "id": "2021-07", "year": 2021, "month": "Yıllık", "city": "Adana", "district": "Seyhan", "lat": 37.0000, "lng": 35.3213, "status": "Cinayet", "motive": "Tartışma", "victim": "Ece Kılıçaslan Akar", "color": "#38bdf8", "text": "Adana'da katledildi." },
+  { "id": "2021-08", "year": 2021, "month": "Yıllık", "city": "Gaziantep", "district": "Şahinbey", "lat": 37.0594, "lng": 37.3825, "status": "Cinayet", "motive": "Aile İçi Şiddet", "victim": "Yağmur Sönmez", "color": "#38bdf8", "text": "Gaziantep'te katledildi." },
+  { "id": "2021-09", "year": 2021, "month": "Yıllık", "city": "Diyarbakır", "district": "Kayapınar", "lat": 37.9158, "lng": 40.2189, "status": "Şüpheli Ölüm", "motive": "Şüpheli Ölüm", "victim": "Buket Pala", "color": "#38bdf8", "text": "Diyarbakır'da şüpheli şekilde bulundu." },
+  { "id": "2021-10", "year": 2021, "month": "Yıllık", "city": "Konya", "district": "Selçuklu", "lat": 37.8744, "lng": 32.4931, "status": "Cinayet", "motive": "Reddetme", "victim": "Özge Binnur Oruç", "color": "#38bdf8", "text": "Konya'da katledildi." },
+  { "id": "2021-11", "year": 2021, "month": "Yıllık", "city": "Mersin", "district": "Yenişehir", "lat": 36.8121, "lng": 34.6415, "status": "Cinayet", "motive": "Boşanma Aşaması", "victim": "Fatma Gümüş", "color": "#38bdf8", "text": "Mersin'de katledildi." },
+  { "id": "2021-12", "year": 2021, "month": "Yıllık", "city": "Samsun", "district": "İlkadım", "lat": 41.2800, "lng": 36.3300, "status": "Şüpheli Ölüm", "motive": "Şüpheli Vaka", "victim": "Admiye Özgür", "color": "#38bdf8", "text": "Samsun'da şüpheli şekilde ölü bulundu." },
+  { "id": "2021-13", "year": 2021, "month": "Yıllık", "city": "Trabzon", "district": "Ortahisar", "lat": 41.0027, "lng": 39.7167, "status": "Cinayet", "motive": "Ayrılma İsteği", "victim": "Kader Aktaş", "color": "#38bdf8", "text": "Trabzon'da katledildi." },
+  { "id": "2021-14", "year": 2021, "month": "Yıllık", "city": "Kayseri", "district": "Melikgazi", "lat": 38.7225, "lng": 35.4875, "status": "Cinayet", "motive": "Kıskançlık", "victim": "Asya Pınar Üzümcü", "color": "#38bdf8", "text": "Kayseri'de katledildi." },
+  { "id": "2021-15", "year": 2021, "month": "Yıllık", "city": "Eskişehir", "district": "Tepebaşı", "lat": 39.7767, "lng": 30.5206, "status": "Şüpheli Ölüm", "motive": "Evde Ölü Bulunma", "victim": "Marziye Salahzade", "color": "#38bdf8", "text": "Eskişehir'de şüpheli şekilde yaşamını yitirdi." }
+]

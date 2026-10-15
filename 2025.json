@@ -1,0 +1,24 @@
+[
+  {
+    "year": 2025,
+    "anitsayac_total": 460,
+    "platform_femicide_total": 417,
+    "suspicious_deaths": 320,
+    "description": "Kadın Cinayetlerini Durduracağız Platformu ve Anıt Sayaç 2025 Yıllık Veri Raporu"
+  },
+  { "id": "2025-01", "year": 2025, "month": "Yıllık", "city": "İstanbul", "district": "Esenyurt", "lat": 41.0261, "lng": 28.6800, "status": "Cinayet", "motive": "Boşanmayı Kabul Etmeme", "victim": "Canan Yıldırım", "color": "#c084fc", "text": "İstanbul Esenyurt'ta koruma kararına rağmen evli olduğu erkek tarafından katledildi." },
+  { "id": "2025-02", "year": 2025, "month": "Yıllık", "city": "Ankara", "district": "Etimesgut", "lat": 39.9497, "lng": 32.6611, "status": "Şüpheli Ölüm", "motive": "Rezidans Balkon Düşmesi", "victim": "Füsun Yuruşkurall", "color": "#c084fc", "text": "Ankara Etimesgut'ta şüpheli şekilde balkondan düşerek yaşamını yitirdi." },
+  { "id": "2025-03", "year": 2025, "month": "Yıllık", "city": "İzmir", "district": "Karşıyaka", "lat": 38.4582, "lng": 27.1118, "status": "Cinayet", "motive": "Ayrılma Talebi", "victim": "Fadime Akbal", "color": "#c084fc", "text": "İzmir Karşıyaka'da iş yerine giderken eski partneri tarafından saldırıya uğradı." },
+  { "id": "2025-04", "year": 2025, "month": "Yıllık", "city": "Gaziantep", "district": "Şehitkamil", "lat": 37.0833, "lng": 37.3667, "status": "Cinayet", "motive": "Aile Şiddeti", "victim": "Merve F.", "color": "#c084fc", "text": "Gaziantep Şehitkamil'de akrabası erkek tarafından ateşli silahla öldürüldü." },
+  { "id": "2025-05", "year": 2025, "month": "Yıllık", "city": "Bursa", "district": "Nilüfer", "lat": 40.2167, "lng": 28.9833, "status": "Cinayet", "motive": "Barışmayı Reddetme", "victim": "Gülşah Oktay", "color": "#c084fc", "text": "Bursa'da barışma teklifini reddettiği için öldürüldü." },
+  { "id": "2025-06", "year": 2025, "month": "Yıllık", "city": "Antalya", "district": "Muratpaşa", "lat": 36.8841, "lng": 30.7056, "status": "Şüpheli Ölüm", "motive": "Evde Ölü Bulunma", "victim": "Gökçe Alkan", "color": "#c084fc", "text": "Antalya'da yalnız yaşadığı evinde şüpheli şekilde ölü bulundu." },
+  { "id": "2025-07", "year": 2025, "month": "Yıllık", "city": "Adana", "district": "Seyhan", "lat": 37.0000, "lng": 35.3213, "status": "Cinayet", "motive": "Kıskançlık Bahanesi", "victim": "Nalan Temelkıran", "color": "#c084fc", "text": "Adana Seyhan'da sokak ortasında vurularak katledildi." },
+  { "id": "2025-08", "year": 2025, "month": "Yıllık", "city": "Diyarbakır", "district": "Kayapınar", "lat": 37.9158, "lng": 40.2189, "status": "Cinayet", "motive": "Akraba Şiddeti", "victim": "Mümine Acar", "color": "#c084fc", "text": "Diyarbakır'da ateşli silahla öldürüldü." },
+  { "id": "2025-09", "year": 2025, "month": "Yıllık", "city": "Mersin", "district": "Yenişehir", "lat": 36.8121, "lng": 34.6415, "status": "Cinayet", "motive": "Boşanma Davası", "victim": "Ayfer Çakmak", "color": "#c084fc", "text": "Mersin'de ayrılmak istediği erkek tarafından öldürüldü." },
+  { "id": "2025-10", "year": 2025, "month": "Yıllık", "city": "Konya", "district": "Selçuklu", "lat": 37.8744, "lng": 32.4931, "status": "Cinayet", "motive": "Kendi Hayatına Dair Karar Almak", "victim": "Fatma Çil", "color": "#c084fc", "text": "Konya'da bıçaklı saldırı sonucu katledildi." },
+  { "id": "2025-11", "year": 2025, "month": "Yıllık", "city": "Samsun", "district": "İlkadım", "lat": 41.2800, "lng": 36.3300, "status": "Şüpheli Ölüm", "motive": "Suda Boğulma", "victim": "Fatma Özcan", "color": "#c084fc", "text": "Samsun sahilinde şüpheli şekilde cansız bedeni bulundu." },
+  { "id": "2025-12", "year": 2025, "month": "Yıllık", "city": "Trabzon", "district": "Ortahisar", "lat": 41.0027, "lng": 39.7167, "status": "Cinayet", "motive": "Tartışma", "victim": "Buse Akgün Gök", "color": "#c084fc", "text": "Trabzon Ortahisar'da katledildi." },
+  { "id": "2025-13", "year": 2025, "month": "Yıllık", "city": "Eskişehir", "district": "Tepebaşı", "lat": 39.7767, "lng": 30.5206, "status": "Cinayet", "motive": "Ekonomik Bahane", "victim": "Ayşe K.", "color": "#c084fc", "text": "Eskişehir'de evinde öldürüldü." },
+  { "id": "2025-14", "year": 2025, "month": "Yıllık", "city": "Şanlıurfa", "district": "Haliliye", "lat": 37.1674, "lng": 38.7934, "status": "Cinayet", "motive": "Aile İçi Şiddet", "victim": "Fadime Ünlü", "color": "#c084fc", "text": "Şanlıurfa'da katledildi." },
+  { "id": "2025-15", "year": 2025, "month": "Yıllık", "city": "Kayseri", "district": "Melikgazi", "lat": 38.7225, "lng": 35.4875, "status": "Şüpheli Ölüm", "motive": "Yüksekten Düşme", "victim": "Merve Keklikçi", "color": "#c084fc", "text": "Kayseri'de şüpheli şekilde düşerek yaşamını yitirdi." }
+]

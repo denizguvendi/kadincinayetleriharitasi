@@ -1,0 +1,24 @@
+[
+  {
+    "year": 2023,
+    "anitsayac_total": 423,
+    "platform_femicide_total": 315,
+    "suspicious_deaths": 248,
+    "description": "Kadın Cinayetlerini Durduracağız Platformu ve Anıt Sayaç 2023 Yıllık Veri Raporu"
+  },
+  { "id": "2023-01", "year": 2023, "month": "Yıllık", "city": "Ankara", "district": "Keçiören", "lat": 39.9781, "lng": 32.8639, "status": "Cinayet", "motive": "Ayrılma Talebi", "victim": "Ebru G.", "color": "#fb923c", "text": "Ankara Keçiören'de ayrılmak istediği nişanlısı tarafından katledildi." },
+  { "id": "2023-02", "year": 2023, "month": "Yıllık", "city": "İzmir", "district": "Buca", "lat": 38.3853, "lng": 27.1706, "status": "Şüpheli Ölüm", "motive": "Evde Ölü Bulunma", "victim": "Pelin Karaca", "color": "#fb923c", "text": "İzmir Buca'da evinde şüpheli şekilde ölü bulundu." },
+  { "id": "2023-03", "year": 2023, "month": "Yıllık", "city": "Antalya", "district": "Alanya", "lat": 36.5438, "lng": 31.9998, "status": "Cinayet", "motive": "Boşanmayı Kabul Etmeme", "victim": "Esma Akgün", "color": "#fb923c", "text": "Antalya Alanya'da tanıştığı erkek tarafından katledildi." },
+  { "id": "2023-04", "year": 2023, "month": "Yıllık", "city": "Konya", "district": "Selçuklu", "lat": 37.8744, "lng": 32.4931, "status": "Cinayet", "motive": "Kıskançlık", "victim": "G.Ç.", "color": "#fb923c", "text": "Konya Selçuklu'da boşanmak istediği erkek tarafından bıçaklandı." },
+  { "id": "2023-05", "year": 2023, "month": "Yıllık", "city": "Kayseri", "district": "Melikgazi", "lat": 38.7225, "lng": 35.4875, "status": "Şüpheli Ölüm", "motive": "Yüksekten Düşme", "victim": "Aysel Yıldız", "color": "#fb923c", "text": "Kayseri'de bir binadan düşerek şüpheli şekilde hayatını kaybetti." },
+  { "id": "2023-06", "year": 2023, "month": "Yıllık", "city": "İstanbul", "district": "Kadıköy", "lat": 40.9901, "lng": 29.0264, "status": "Cinayet", "motive": "Ayrılma İsteği", "victim": "Zebrensu Dünyagüzel", "color": "#fb923c", "text": "İstanbul Kadıköy'de ateşli silahla katledildi." },
+  { "id": "2023-07", "year": 2023, "month": "Yıllık", "city": "Adana", "district": "Seyhan", "lat": 37.0000, "lng": 35.3213, "status": "Cinayet", "motive": "Tartışma", "victim": "Döne Bozdemir", "color": "#fb923c", "text": "Adana Seyhan'da evli olduğu erkek tarafından katledildi." },
+  { "id": "2023-08", "year": 2023, "month": "Yıllık", "city": "Bursa", "district": "Osmangazi", "lat": 40.1885, "lng": 29.0610, "status": "Cinayet", "motive": "Barışmayı Reddetme", "victim": "Çiğdem Eskidemirci", "color": "#fb923c", "text": "Bursa'da barışma teklifini reddettiği için öldürüldü." },
+  { "id": "2023-09", "year": 2023, "month": "Yıllık", "city": "Gaziantep", "district": "Şehitkamil", "lat": 37.0833, "lng": 37.3667, "status": "Cinayet", "motive": "Aile Şiddeti", "victim": "Fadime Temirhanoğulları", "color": "#fb923c", "text": "Gaziantep'te akrabası olan erkek tarafından katledildi." },
+  { "id": "2023-10", "year": 2023, "month": "Yıllık", "city": "Diyarbakır", "district": "Kayapınar", "lat": 37.9158, "lng": 40.2189, "status": "Şüpheli Ölüm", "motive": "Tespit Edilemedi", "victim": "Hacer Ozan", "color": "#fb923c", "text": "Diyarbakır'da şüpheli ölü bulundu." },
+  { "id": "2023-11", "year": 2023, "month": "Yıllık", "city": "Mersin", "district": "Yenişehir", "lat": 36.8121, "lng": 34.6415, "status": "Cinayet", "motive": "Boşanma Davası", "victim": "Hatice Hemşer", "color": "#fb923c", "text": "Mersin'de adliye yakınında vurularak öldürüldü." },
+  { "id": "2023-12", "year": 2023, "month": "Yıllık", "city": "Samsun", "district": "İlkadım", "lat": 41.2800, "lng": 36.3300, "status": "Şüpheli Ölüm", "motive": "Şüpheli Düşme", "victim": "Havva Kılıç", "color": "#fb923c", "text": "Samsun'da şüpheli şekilde evinde ölü bulundu." },
+  { "id": "2023-13", "year": 2023, "month": "Yıllık", "city": "Eskişehir", "district": "Tepebaşı", "lat": 39.7767, "lng": 30.5206, "status": "Cinayet", "motive": "Ekonomik Bahane", "victim": "Maira A.", "color": "#fb923c", "text": "Eskişehir'de tartışma bahanesiyle öldürüldü." },
+  { "id": "2023-14", "year": 2023, "month": "Yıllık", "city": "Trabzon", "district": "Ortahisar", "lat": 41.0027, "lng": 39.7167, "status": "Cinayet", "motive": "Ayrılma İsteği", "victim": "Elif Ceren Arslan", "color": "#fb923c", "text": "Trabzon Ortahisar'da katledildi." },
+  { "id": "2023-15", "year": 2023, "month": "Yıllık", "city": "Şanlıurfa", "district": "Haliliye", "lat": 37.1674, "lng": 38.7934, "status": "Cinayet", "motive": "Aile İçi Şiddet", "victim": "Hamiyyet Çetin Görmezer", "color": "#fb923c", "text": "Şanlıurfa'da silahlı saldırı sonucu hayatını kaybetti." }
+]

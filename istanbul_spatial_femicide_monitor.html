@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye Spatial Archive — Kadın Cinayetleri & Şüpheli Ölümler (2021–2026)</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        plum: {
+                            950: '#0a0612',
+                            900: '#100a18',
+                            800: '#1a1126',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        body {
+            background-color: #0a0612;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        #map {
+            height: 100vh;
+            width: 100vw;
+            background: #0a0612;
+            z-index: 1;
+        }
+
+        .leaflet-tile-pane {
+            filter: grayscale(100%) invert(92%) hue-rotate(220deg) contrast(130%) brightness(45%);
+            opacity: 0.7;
+        }
+
+        .ambient-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .custom-circle-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .node-circle-marker {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transition: all 0.05s ease;
+            cursor: pointer;
+        }
+
+        .node-circle-marker:hover {
+            transform: scale(2.8);
+            z-index: 9999 !important;
+        }
+
+        .modal-overlay {
+            background: rgba(10, 6, 18, 0.9);
+            backdrop-filter: blur(6px);
+        }
+
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.4); border-radius: 2px; }
+    </style>
+</head>
+<body class="relative w-screen h-screen overflow-hidden select-none">
+
+    <div class="ambient-blob w-[500px] h-[500px] bg-purple-700 top-[-100px] left-[-100px]"></div>
+    <div class="ambient-blob w-[600px] h-[600px] bg-fuchsia-600 bottom-[-100px] right-[-100px]"></div>
+
+    <!-- Üst Bilgi Alanı -->
+    <header class="absolute top-0 inset-x-0 z-20 px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between items-start text-xs font-mono tracking-wider uppercase text-slate-300 pointer-events-none bg-gradient-to-b from-plum-950 via-plum-950/80 to-transparent pb-6 gap-3">
+        
+        <div class="pointer-events-auto max-w-sm sm:max-w-md">
+            <div class="flex items-center space-x-2.5">
+                <h1 class="font-mono text-lg sm:text-xl font-bold text-slate-100 tracking-tight">
+                    ÖLMEK İSTEMİYORUZ!
+                </h1>
+                <span class="text-[11px] text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full font-medium">2021–2026</span>
+            </div>
+
+            <div class="mt-2 text-xs font-sans normal-case">
+                <button id="toggle-manifesto" class="text-xs font-mono uppercase text-purple-300 hover:text-white flex items-center gap-1.5 transition font-medium">
+                    <span id="manifesto-arrow" class="transition-transform duration-200">►</span> <span>Manifesto / Bildiri</span>
+                </button>
+
+                <div id="manifesto-box" class="hidden mt-2 text-slate-300 space-y-2 text-xs sm:text-sm leading-relaxed pr-2">
+                    <p class="italic font-serif text-slate-100">
+                        "Mekân, yalnızca coğrafya değil; hafızanın, direnişin ve adalet arayışının haritasıdır."
+                    </p>
+                    <p class="text-slate-400 text-xs">
+                        Bu dijital arşiv, 2021-2026 yılları arasında Türkiye'nin 81 ilinde erkek şiddeti sonucu yaşamını yitiren ve şüpheli şekilde ölü bulunan kadınların mekânsal hafızasını tutar.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="header-columns" class="hidden lg:flex space-x-6 text-xs font-mono text-slate-300 px-4 py-2 rounded-full pointer-events-auto">
+            <div>
+                <span class="text-slate-500 block text-[9px] tracking-widest">NE ZAMAN</span>
+                <span id="col-when" class="text-slate-200 font-medium">2021 – 2026</span>
+            </div>
+            <div>
+                <span class="text-slate-500 block text-[9px] tracking-widest">KİM / KİŞİ</span>
+                <span id="col-who" class="text-slate-200 font-medium">Türkiye Geneli</span>
+            </div>
+            <div>
+                <span class="text-slate-500 block text-[9px] tracking-widest">NEREDE</span>
+                <span id="col-where" class="text-slate-200 font-medium">81 İl Archive</span>
+            </div>
+            <div>
+                <span class="text-slate-500 block text-[9px] tracking-widest">BAHANE / NEDEN</span>
+                <span id="col-motive" class="text-slate-200 font-medium">Erkek Şiddeti & Şüpheli</span>
+            </div>
+            <div>
+                <span class="text-slate-500 block text-[9px] tracking-widest">DURUM</span>
+                <span id="col-status" class="text-rose-400 font-semibold">Aktif Veri</span>
+            </div>
+        </div>
+
+        <div class="pointer-events-auto text-[11px] text-slate-300 flex flex-col gap-0.5 items-start md:items-end">
+            <div>
+                <span class="text-slate-400">Veri Kaynağı:</span>
+                <a href="https://kadincinayetlerinidurduracagiz.net" target="_blank" rel="noopener noreferrer" class="text-rose-300 hover:text-white font-medium ml-1 underline">
+                    Kadın Cinayetlerini Durduracağız Platformu
+                </a>
+            </div>
+            <div>
+                <span class="text-slate-400">GIS Arşivi:</span>
+                <a href="https://www.arcgis.com/apps/dashboards/b3a5601b2807414c964d4a4089c1c575" target="_blank" rel="noopener noreferrer" class="text-purple-300 hover:text-white font-medium ml-1 underline">
+                    Coğrafya'nın Kadın Kaderi
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div id="map"></div>
+
+    <!-- Sol Alt Sayaç ve Yıllara Göre Dağılım (Kutucuksuz / Şeffaf Layover) -->
+    <div class="absolute bottom-20 sm:bottom-6 left-4 sm:left-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 min-w-[280px] sm:min-w-[320px]">
+        <div class="space-y-1">
+            <div class="text-slate-100 font-bold text-sm">
+                <span id="active-count" class="text-rose-400 font-extrabold text-base">0</span> Vaka Gösteriliyor
+            </div>
+            <div class="text-[11px] text-slate-400 leading-tight" id="filter-status-text">
+                Filtre: Tüm Yıllar | Tüm İller
+            </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-purple-500/10 grid grid-cols-6 gap-1 text-[10px] text-slate-300 text-center">
+            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#38bdf8] mb-1"></span><span id="count-21" class="font-bold">0</span><span class="text-[9px] text-slate-400">21</span></div>
+            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#f472b6] mb-1"></span><span id="count-22" class="font-bold">0</span><span class="text-[9px] text-slate-400">22</span></div>
+            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#fb923c] mb-1"></span><span id="count-23" class="font-bold">0</span><span class="text-[9px] text-slate-400">23</span></div>
+            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#34d399] mb-1"></span><span id="count-24" class="font-bold">0</span><span class="text-[9px] text-slate-400">24</span></div>
+            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#c084fc] mb-1"></span><span id="count-25" class="font-bold">0</span><span class="text-[9px] text-slate-400">25</span></div>
+            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#fb7185] mb-1"></span><span id="count-26" class="font-bold">0</span><span class="text-[9px] text-slate-400">26</span></div>
+        </div>
+    </div>
+
+    <!-- Sağ Alt Katilin Motivasyonu & İzolasyon (Kutucuksuz, Ok Tuşlu Kapatma Özelliği) -->
+    <div id="motive-analytics-panel" class="absolute bottom-20 sm:bottom-6 right-4 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-xs sm:max-w-sm w-full max-h-[calc(100vh-180px)] flex flex-col hidden">
+        <div class="flex justify-between items-center pb-2 border-b border-purple-500/20 mb-2 shrink-0">
+            <span class="text-slate-100 font-bold text-xs tracking-wider">KATILIN MOTİVASYONU</span>
+            <div class="flex items-center gap-2">
+                <button id="reset-isolation" class="text-[11px] text-purple-300 hover:text-white underline font-medium hidden">[ Filtreyi Kaldır ]</button>
+                <button id="toggle-motive-panel" class="text-slate-300 hover:text-white px-1.5 py-0.5 rounded font-bold text-sm transition" title="Paneli Küçült / Gizle">▼</button>
+            </div>
+        </div>
+        <div id="motive-chart-container" class="space-y-2 overflow-y-auto pr-1 flex-1 transition-all duration-200"></div>
+    </div>
+
+    <!-- Alt Menü Butonları -->
+    <div class="absolute bottom-3 inset-x-0 z-20 flex justify-center pointer-events-none px-3">
+        <div class="pointer-events-auto bg-plum-950/90 border border-purple-500/30 backdrop-blur-xl rounded-full px-4 py-2 flex items-center flex-wrap justify-center gap-2.5 sm:space-x-6 text-xs font-mono shadow-2xl text-slate-200">
+            <button id="btn-years" class="hover:text-white transition tracking-wider font-semibold">YILLAR</button>
+            <span class="text-slate-600 hidden sm:inline">|</span>
+            <button id="btn-status" class="hover:text-white transition tracking-wider font-semibold">DURUM</button>
+            <span class="text-slate-600 hidden sm:inline">|</span>
+            <button id="btn-city" class="hover:text-white transition tracking-wider font-semibold">ŞEHİR</button>
+            <span class="text-slate-600 hidden sm:inline">|</span>
+            <button id="btn-search" class="hover:text-white transition tracking-wider font-semibold">ARAMA</button>
+        </div>
+    </div>
+
+    <!-- Açılır Filtre Paneli (Drawer) - Scroll edilebilir yapı -->
+    <div id="drawer-menu" class="absolute bottom-20 inset-x-0 z-30 flex justify-center pointer-events-none px-4 hidden">
+        <div class="pointer-events-auto bg-plum-950/98 border border-purple-500/30 backdrop-blur-2xl rounded-3xl p-5 max-w-lg w-full max-h-[60vh] overflow-y-auto text-xs font-mono shadow-2xl space-y-4">
+            
+            <div id="sec-years" class="space-y-2">
+                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">Yıl Seçimi</span>
+                <div class="flex flex-wrap gap-1.5" id="year-buttons">
+                    <button data-year="all" class="year-btn bg-purple-600 text-white px-3 py-1.5 rounded-xl font-medium transition text-xs">TÜMÜ</button>
+                    <button data-year="2021" class="year-btn bg-plum-900 hover:bg-plum-800 text-slate-200 px-3 py-1.5 rounded-xl transition text-xs">2021</button>
+                    <button data-year="2022" class="year-btn bg-plum-900 hover:bg-plum-800 text-slate-200 px-3 py-1.5 rounded-xl transition text-xs">2022</button>
+                    <button data-year="2023" class="year-btn bg-plum-900 hover:bg-plum-800 text-slate-200 px-3 py-1.5 rounded-xl transition text-xs">2023</button>
+                    <button data-year="2024" class="year-btn bg-plum-900 hover:bg-plum-800 text-slate-200 px-3 py-1.5 rounded-xl transition text-xs">2024</button>
+                    <button data-year="2025" class="year-btn bg-plum-900 hover:bg-plum-800 text-slate-200 px-3 py-1.5 rounded-xl transition text-xs">2025</button>
+                    <button data-year="2026" class="year-btn bg-plum-900 hover:bg-plum-800 text-slate-200 px-3 py-1.5 rounded-xl transition text-xs">2026</button>
+                </div>
+            </div>
+
+            <div id="sec-status" class="space-y-2 hidden">
+                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">Vaka Durumu</span>
+                <div class="flex flex-wrap gap-2">
+                    <button data-status="all" class="status-btn bg-purple-600 text-white px-3.5 py-1.5 rounded-xl transition text-xs font-medium">TÜMÜ</button>
+                    <button data-status="Cinayet" class="status-btn bg-plum-900 hover:bg-plum-800 text-rose-300 px-3.5 py-1.5 rounded-xl border border-rose-500/30 transition text-xs font-medium">KADIN CİNAYETİ</button>
+                    <button data-status="Şüpheli Ölüm" class="status-btn bg-plum-900 hover:bg-plum-800 text-amber-300 px-3.5 py-1.5 rounded-xl border border-amber-500/30 transition text-xs font-medium">ŞÜPHELİ ÖLÜM</button>
+                </div>
+            </div>
+
+            <div id="sec-city" class="space-y-2 hidden">
+                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">İl / Bölge Filtresi</span>
+                <select id="city-select" class="w-full bg-plum-900 border border-purple-500/30 rounded-xl px-3 py-2 text-slate-100 text-xs focus:outline-none focus:border-purple-400">
+                    <option value="all">Tüm Türkiye</option>
+                    <option value="İstanbul">İstanbul</option>
+                    <option value="Ankara">Ankara</option>
+                    <option value="İzmir">İzmir</option>
+                    <option value="Bursa">Bursa</option>
+                    <option value="Antalya">Antalya</option>
+                    <option value="Adana">Adana</option>
+                    <option value="Diyarbakır">Diyarbakır</option>
+                    <option value="Gaziantep">Gaziantep</option>
+                    <option value="Konya">Konya</option>
+                    <option value="Mersin">Mersin</option>
+                    <option value="Trabzon">Trabzon</option>
+                    <option value="Samsun">Samsun</option>
+                    <option value="Eskişehir">Eskişehir</option>
+                    <option value="Şanlıurfa">Şanlıurfa</option>
+                    <option value="Türkiye Geneli">Türkiye Geneli / Diğer</option>
+                </select>
+            </div>
+
+            <div id="sec-search" class="space-y-2 hidden">
+                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">Anahtar Kelime Ara</span>
+                <input type="text" id="search-input" placeholder="İsim, ilçe veya detay ara..." class="w-full bg-plum-900 border border-purple-500/30 rounded-xl px-3 py-2 text-slate-100 placeholder-slate-500 text-xs focus:outline-none focus:border-purple-400">
+            </div>
+
+            <div class="text-right pt-2 border-t border-purple-500/20">
+                <button id="close-drawer" class="text-slate-300 hover:text-white text-[11px] uppercase tracking-widest font-bold">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detay Modal Penceresi -->
+    <div id="modal-overlay" class="fixed inset-0 z-50 modal-overlay flex items-center justify-center p-4 hidden">
+        <div class="relative max-w-xl w-full bg-plum-950 border border-purple-500/40 rounded-3xl p-6 sm:p-8 pb-14 space-y-5 shadow-2xl">
+            <button id="close-modal" class="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-plum-900 border border-purple-500/40 text-white flex items-center justify-center hover:bg-purple-800 transition text-sm font-bold shadow-lg">✕</button>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono uppercase tracking-wider text-slate-300 border-b border-purple-500/20 pb-4">
+                <div>
+                    <span class="text-slate-400 block text-[10px]">NE ZAMAN</span>
+                    <span id="modal-when" class="text-slate-100 font-medium">-</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[10px]">NEREDE</span>
+                    <span id="modal-where" class="text-slate-100 font-medium">-</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[10px]">DURUM</span>
+                    <span id="modal-status" class="text-rose-400 font-semibold">-</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[10px]">BAHANE</span>
+                    <span id="modal-motive" class="text-purple-300 font-medium">-</span>
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <span id="modal-victim" class="text-xs font-mono text-purple-400 tracking-wider uppercase block font-semibold">Kayıt Detayı</span>
+                <h2 id="modal-title" class="font-serif text-xl sm:text-2xl font-normal text-slate-100 leading-snug">
+                    Vaka Başlığı
+                </h2>
+            </div>
+
+            <div class="bg-plum-900/50 rounded-2xl p-4 border border-purple-500/20">
+                <p id="modal-desc" class="font-sans text-sm text-slate-200 leading-relaxed max-h-48 overflow-y-auto pr-2">
+                    Rapor açıklaması yükleniyor...
+                </p>
+            </div>
+
+            <div class="pt-2 border-t border-purple-500/20 flex justify-between items-center text-xs font-mono text-slate-300">
+                <div id="modal-source-container">
+                    <span>Haber Kaynağı: </span>
+                    <a id="modal-source-link" href="#" target="_blank" class="text-rose-400 hover:underline">Git ↗</a>
+                </div>
+                <div id="modal-coordinates" class="text-xs text-slate-400">-</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Mantığı ve Veri Entegrasyonu -->
+    <script>
+        let allDataset = [];
+        let currentYear = 'all';
+        let currentStatus = 'all';
+        let currentCity = 'all';
+        let isolatedMotive = null;
+        let searchQuery = '';
+        let activeMarkers = [];
+        let activeLines = [];
+        let motivePanelCollapsed = false;
+
+        function extractCleanMotive(item) {
+            let m = item.motive;
+            if (!m || m.includes('Hürriyet Arşivi Otomasyonu') || m.includes('ArcGIS') || m.trim() === '' || m === 'Tespit Edilemedi' || m === 'Bilinmiyor') {
+                const txt = (item.text || '').toLowerCase();
+                if (txt.includes('boşan') || txt.includes('ayrıl')) return 'Boşanmak / Ayrılmak İsteme';
+                if (txt.includes('kıskanç') || txt.includes('ilişki')) return 'Kıskançlık / İlişki Tartışması';
+                if (txt.includes('para') || txt.includes('mal paylaşım') || txt.includes('ekonomik')) return 'Ekonomik / Mal Paylaşımı';
+                if (txt.includes('tartışma') || txt.includes('kavga')) return 'Tartışma / Gerekçesiz';
+                if (item.status === 'Şüpheli Ölüm') return 'Şüpheli Ölüm / Aydınlatılmayı Bekleyen';
+                return 'Belirtilmemiş / Diğer';
+            }
+            return m.trim();
+        }
+
+        function getColorByMotive(motive) {
+            if (!motive) return '#94a3b8';
+            const m = motive.toLowerCase();
+            if (m.includes('boşan') || m.includes('ayrıl')) return '#fb7185';
+            if (m.includes('kıskanç') || m.includes('ilişki')) return '#f43f5e';
+            if (m.includes('ekonomik') || m.includes('mal')) return '#34d399';
+            if (m.includes('tartışma')) return '#fb923c';
+            if (m.includes('şüpheli')) return '#c084fc';
+            
+            let hash = 0;
+            for (let i = 0; i < motive.length; i++) {
+                hash = motive.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const colors = ['#38bdf8', '#f472b6', '#fb923c', '#34d399', '#c084fc', '#fb7185', '#818cf8'];
+            return colors[Math.abs(hash) % colors.length];
+        }
+
+        const map = L.map('map', {
+            zoomControl: false,
+            center: [39.0, 35.2],
+            zoom: 7,
+            minZoom: 5,
+            maxZoom: 18
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap',
+            maxZoom: 18
+        }).addTo(map);
+
+        async function loadAllData() {
+            allDataset = [];
+            
+            const dataFiles = [
+                'femicide_data.json',
+                'femicide_auto.json',
+                'femicide_arcgis.json',
+                '2021.json', '2022.json', '2023.json', '2024.json', '2025.json', '2026.json'
+            ];
+
+            for (const file of dataFiles) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        const data = await response.json();
+                        const records = Array.isArray(data) ? data : (data.features || []);
+                        const validRecords = records.filter(item => item.lat !== undefined && item.lng !== undefined && !isNaN(parseFloat(item.lat)));
+                        
+                        validRecords.forEach(r => {
+                            r.motive = extractCleanMotive(r);
+                        });
+                        
+                        allDataset = allDataset.concat(validRecords);
+                    }
+                } catch (err) {
+                    console.warn(`${file} yüklenemedi.`);
+                }
+            }
+
+            updateYearCounts();
+            renderMarkers();
+        }
+
+        function updateYearCounts() {
+            const counts = { 2021: 0, 2022: 0, 2023: 0, 2024: 0, 2025: 0, 2026: 0 };
+            allDataset.forEach(item => {
+                const y = parseInt(item.year);
+                if (counts[y] !== undefined) {
+                    counts[y]++;
+                }
+            });
+            document.getElementById('count-21').textContent = counts[2021];
+            document.getElementById('count-22').textContent = counts[2022];
+            document.getElementById('count-23').textContent = counts[2023];
+            document.getElementById('count-24').textContent = counts[2024];
+            document.getElementById('count-25').textContent = counts[2025];
+            document.getElementById('count-26').textContent = counts[2026];
+        }
+
+        function updateMotiveAnalyticsChart(filteredDataset) {
+            const panel = document.getElementById('motive-analytics-panel');
+            const container = document.getElementById('motive-chart-container');
+            container.innerHTML = '';
+
+            const motiveCounts = {};
+            let total = filteredDataset.length;
+
+            if (total === 0) {
+                panel.classList.add('hidden');
+                return;
+            }
+
+            panel.classList.remove('hidden');
+
+            filteredDataset.forEach(item => {
+                const m = item.motive || 'Belirtilmemiş';
+                motiveCounts[m] = (motiveCounts[m] || 0) + 1;
+            });
+
+            const sortedMotives = Object.entries(motiveCounts).sort((a, b) => b[1] - a[1]);
+
+            sortedMotives.forEach(([motive, count]) => {
+                const percentage = ((count / total) * 100).toFixed(1);
+                const color = getColorByMotive(motive);
+                const isSelected = isolatedMotive === motive;
+
+                const row = document.createElement('div');
+                row.className = `cursor-pointer p-1.5 rounded-lg transition ${isSelected ? 'bg-purple-900/40 border border-purple-500/40' : 'hover:bg-purple-950/40'}`;
+                row.title = `${motive}: ${count} vaka (${percentage}%) - İzole etmek için tıklayın`;
+                
+                row.innerHTML = `
+                    <div class="flex justify-between text-xs text-slate-200 mb-1 font-medium">
+                        <span class="truncate max-w-[200px]" title="${motive}">${motive}</span>
+                        <span class="font-bold">${count} (${percentage}%)</span>
+                    </div>
+                    <div class="w-full bg-plum-900 h-2 rounded-full overflow-hidden border border-purple-500/20">
+                        <div class="h-full transition-all duration-300" style="width: ${percentage}%; background-color: ${color};"></div>
+                    </div>
+                `;
+
+                row.addEventListener('click', () => {
+                    if (isolatedMotive === motive) {
+                        isolatedMotive = null;
+                        document.getElementById('reset-isolation').classList.add('hidden');
+                    } else {
+                        isolatedMotive = motive;
+                        document.getElementById('reset-isolation').classList.remove('hidden');
+                    }
+                    renderMarkers();
+                });
+
+                container.appendChild(row);
+            });
+        }
+
+        document.getElementById('reset-isolation').addEventListener('click', () => {
+            isolatedMotive = null;
+            document.getElementById('reset-isolation').classList.add('hidden');
+            renderMarkers();
+        });
+
+        document.getElementById('toggle-motive-panel').addEventListener('click', () => {
+            motivePanelCollapsed = !motivePanelCollapsed;
+            const container = document.getElementById('motive-chart-container');
+            const arrowBtn = document.getElementById('toggle-motive-panel');
+            if (motivePanelCollapsed) {
+                container.style.display = 'none';
+                arrowBtn.textContent = '▲';
+                arrowBtn.title = 'Paneli Göster';
+            } else {
+                container.style.display = 'block';
+                arrowBtn.textContent = '▼';
+                arrowBtn.title = 'Paneli Küçült / Gizle';
+            }
+        });
+
+        function renderMarkers() {
+            activeMarkers.forEach(m => map.removeLayer(m));
+            activeMarkers = [];
+            activeLines.forEach(l => map.removeLayer(l));
+            activeLines = [];
+
+            const filtered = allDataset.filter(item => {
+                if (currentYear !== 'all' && item.year && item.year.toString() !== currentYear.toString()) return false;
+                if (currentStatus !== 'all' && item.status && item.status !== currentStatus) return false;
+                if (currentCity !== 'all' && item.city && item.city !== currentCity) return false;
+                if (isolatedMotive !== null && item.motive !== isolatedMotive) return false;
+                if (searchQuery.trim() !== '') {
+                    const q = searchQuery.toLowerCase();
+                    const textMatch = item.text && item.text.toLowerCase().includes(q);
+                    const victimMatch = item.victim && item.victim.toLowerCase().includes(q);
+                    const cityMatch = item.city && item.city.toLowerCase().includes(q);
+                    if (!textMatch && !victimMatch && !cityMatch) return false;
+                }
+                return true;
+            });
+
+            updateMotiveAnalyticsChart(allDataset.filter(item => {
+                if (currentYear !== 'all' && item.year && item.year.toString() !== currentYear.toString()) return false;
+                if (currentStatus !== 'all' && item.status && item.status !== currentStatus) return false;
+                if (currentCity !== 'all' && item.city && item.city !== currentCity) return false;
+                return true;
+            }));
+
+            const coordCounts = {};
+            const motiveGroups = {};
+
+            filtered.forEach(item => {
+                const lat = parseFloat(item.lat);
+                const lng = parseFloat(item.lng);
+                if (isNaN(lat) || isNaN(lng)) return;
+
+                const coordKey = `${lat.toFixed(2)}_${lng.toFixed(2)}`;
+                coordCounts[coordKey] = (coordCounts[coordKey] || 0) + 1;
+                
+                const jitterLat = (coordCounts[coordKey] > 1) ? (Math.random() - 0.5) * 0.03 : 0;
+                const jitterLng = (coordCounts[coordKey] > 1) ? (Math.random() - 0.5) * 0.03 : 0;
+
+                const finalLat = lat + jitterLat;
+                const finalLng = lng + jitterLng;
+
+                const motive = item.motive || 'Belirtilmemiş';
+                const markerColor = getColorByMotive(motive);
+
+                if (!motiveGroups[motive]) {
+                    motiveGroups[motive] = { coords: [], color: markerColor };
+                }
+                motiveGroups[motive].coords.push([finalLat, finalLng]);
+
+                const circleIcon = L.divIcon({
+                    className: 'custom-circle-wrapper',
+                    html: `<div class="node-circle-marker" style="background: radial-gradient(circle, ${markerColor} 30%, rgba(10, 6, 18, 0.8) 100%); box-shadow: 0 0 8px ${markerColor};"></div>`,
+                    iconSize: [10, 10],
+                    iconAnchor: [5, 5]
+                });
+
+                const marker = L.marker([finalLat, finalLng], { icon: circleIcon }).addTo(map);
+
+                marker.on('click', () => {
+                    openModal(item);
+                    updateTopHeader(item);
+                });
+
+                activeMarkers.push(marker);
+            });
+
+            Object.keys(motiveGroups).forEach(motive => {
+                const group = motiveGroups[motive];
+                const coords = group.coords;
+                const lineColor = group.color;
+
+                if (coords.length > 1) {
+                    for (let i = 0; i < coords.length - 1; i++) {
+                        const line = L.polyline([coords[i], coords[i+1]], {
+                            color: lineColor,
+                            weight: 1,
+                            opacity: 0.15,
+                            dashArray: '3, 6'
+                        }).addTo(map);
+                        activeLines.push(line);
+                    }
+                }
+            });
+
+            document.getElementById('active-count').textContent = filtered.length;
+            const cityText = (currentCity === 'all') ? 'Tüm Türkiye' : currentCity;
+            document.getElementById('filter-status-text').textContent = `Filtre: Yıl (${currentYear}) | Durum (${currentStatus}) | Şehir (${cityText})`;
+        }
+
+        function openModal(item) {
+            document.getElementById('modal-when').textContent = `${item.year || '2026'} ${item.month || ''}`;
+            document.getElementById('modal-where').textContent = `${item.city || 'Bilinmiyor'} / ${item.district || 'Merkez'}`;
+            document.getElementById('modal-status').textContent = item.status || 'Cinayet';
+            document.getElementById('modal-motive').textContent = item.motive || 'Belirtilmedi';
+            document.getElementById('modal-victim').textContent = item.victim || 'Vaka Kaydı';
+            document.getElementById('modal-title').textContent = item.city ? `${item.city} (${item.district || 'Merkez'}) — ${item.status || 'Vaka'}` : 'Vaka Detayı';
+            document.getElementById('modal-desc').textContent = `"${item.text || 'Açıklama bulunmuyor.'}"`;
+            document.getElementById('modal-coordinates').textContent = `${parseFloat(item.lat).toFixed(4)}° N, ${parseFloat(item.lng).toFixed(4)}° E`;
+
+            const sourceContainer = document.getElementById('modal-source-container');
+            const sourceLink = document.getElementById('modal-source-link');
+            if (item.source_url) {
+                sourceLink.href = item.source_url;
+                sourceContainer.style.display = 'block';
+            } else {
+                sourceLink.href = '#';
+                sourceContainer.style.display = 'none';
+            }
+
+            document.getElementById('modal-overlay').classList.remove('hidden');
+        }
+
+        function updateTopHeader(item) {
+            document.getElementById('col-when').textContent = `${item.year || '2026'} ${item.month || ''}`;
+            document.getElementById('col-who').textContent = `${item.victim || 'Kayıt'}`;
+            document.getElementById('col-where').textContent = `${item.city || ''} / ${item.district || ''}`;
+            document.getElementById('col-motive').textContent = item.motive || '-';
+            document.getElementById('col-status').textContent = item.status || '-';
+        }
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('modal-overlay').classList.add('hidden');
+        });
+
+        const drawer = document.getElementById('drawer-menu');
+
+        function toggleDrawer(section) {
+            drawer.classList.remove('hidden');
+            document.getElementById('sec-years').classList.toggle('hidden', section !== 'years');
+            document.getElementById('sec-status').classList.toggle('hidden', section !== 'status');
+            document.getElementById('sec-city').classList.toggle('hidden', section !== 'city');
+            document.getElementById('sec-search').classList.toggle('hidden', section !== 'search');
+        }
+
+        document.getElementById('btn-years').addEventListener('click', () => toggleDrawer('years'));
+        document.getElementById('btn-status').addEventListener('click', () => toggleDrawer('status'));
+        document.getElementById('btn-city').addEventListener('click', () => toggleDrawer('city'));
+        document.getElementById('btn-search').addEventListener('click', () => toggleDrawer('search'));
+        document.getElementById('close-drawer').addEventListener('click', () => drawer.classList.add('hidden'));
+
+        document.querySelectorAll('.year-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.year-btn').forEach(b => {
+                    b.classList.remove('bg-purple-600', 'text-white');
+                    b.classList.add('bg-plum-900', 'text-slate-200');
+                });
+                e.target.classList.remove('bg-plum-900', 'text-slate-200');
+                e.target.classList.add('bg-purple-600', 'text-white');
+
+                currentYear = e.target.getAttribute('data-year');
+                renderMarkers();
+            });
+        });
+
+        document.querySelectorAll('.status-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.status-btn').forEach(b => {
+                    b.classList.remove('bg-purple-600', 'text-white');
+                    b.classList.add('bg-plum-900');
+                });
+                e.target.classList.remove('bg-plum-900');
+                e.target.classList.add('bg-purple-600', 'text-white');
+
+                currentStatus = e.target.getAttribute('data-status');
+                renderMarkers();
+            });
+        });
+
+        document.getElementById('city-select').addEventListener('change', (e) => {
+            currentCity = e.target.value;
+            renderMarkers();
+        });
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderMarkers();
+        });
+
+        const toggleBtn = document.getElementById('toggle-manifesto');
+        const manifestoBox = document.getElementById('manifesto-box');
+        const manifestoArrow = document.getElementById('manifesto-arrow');
+
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = manifestoBox.classList.contains('hidden');
+            if (isHidden) {
+                manifestoBox.classList.remove('hidden');
+                manifestoArrow.style.transform = 'rotate(90deg)';
+            } else {
+                manifestoBox.classList.add('hidden');
+                manifestoArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        window.onload = function() {
+            loadAllData();
+        };
+    </script>
+</body>
+</html>
