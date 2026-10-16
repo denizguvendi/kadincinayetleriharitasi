@@ -104,22 +104,26 @@
         
         <div class="pointer-events-auto max-w-sm sm:max-w-md">
             <div class="flex items-center space-x-2.5">
-                <h1 class="font-mono text-lg sm:text-xl font-bold text-slate-100 tracking-tight">
+                <h1 class="font-mono text-lg sm:text-xl font-bold text-slate-100 tracking-tight" id="i18n-title">
                     FEMICIDE MAP OF TURKEY
                 </h1>
                 <span class="text-[11px] text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full font-medium">2021–2026</span>
+                <!-- Dil Değiştirme Butonu -->
+                <button id="lang-toggle-btn" class="ml-2 bg-purple-900/60 hover:bg-purple-800 border border-purple-500/40 text-purple-200 text-[10px] font-mono px-2 py-0.5 rounded-md transition font-bold">
+                    EN
+                </button>
             </div>
 
             <div class="mt-2 text-xs font-sans normal-case">
                 <button id="toggle-manifesto" class="text-xs font-mono uppercase text-purple-300 hover:text-white flex items-center gap-1.5 transition font-medium">
-                    <span id="manifesto-arrow" class="transition-transform duration-200">►</span> <span>Bildiri</span>
+                    <span id="manifesto-arrow" class="transition-transform duration-200">►</span> <span id="i18n-manifesto-btn">Bildiri</span>
                 </button>
 
                 <div id="manifesto-box" class="hidden mt-2 text-slate-300 space-y-2 text-xs sm:text-sm leading-relaxed pr-2">
-                    <p class="italic font-serif text-slate-100">
+                    <p class="italic font-serif text-slate-100" id="i18n-manifesto-quote">
                         "Mekân, yalnızca coğrafya değil; hafızanın, direnişin ve adalet arayışının haritasıdır."
                     </p>
-                    <p class="text-slate-400 text-xs">
+                    <p class="text-slate-400 text-xs" id="i18n-manifesto-text">
                         Bu dijital arşiv, 2021-2026 yılları arasında Türkiye'nin 81 ilinde erkek şiddeti sonucu yaşamını yitiren ve şüpheli şekilde ölü bulunan kadınların mekânsal hafızasını tutar.
                     </p>
                 </div>
@@ -128,36 +132,36 @@
 
         <div id="header-columns" class="hidden lg:flex space-x-6 text-xs font-mono text-slate-300 px-4 py-2 rounded-full pointer-events-auto">
             <div>
-                <span class="text-slate-500 block text-[9px] tracking-widest">NE ZAMAN</span>
+                <span class="text-slate-500 block text-[9px] tracking-widest" id="i18n-lbl-when">NE ZAMAN</span>
                 <span id="col-when" class="text-slate-200 font-medium">2021 – 2026</span>
             </div>
             <div>
-                <span class="text-slate-500 block text-[9px] tracking-widest">KİM / KİŞİ</span>
+                <span class="text-slate-500 block text-[9px] tracking-widest" id="i18n-lbl-who">KİM / KİŞİ</span>
                 <span id="col-who" class="text-slate-200 font-medium">Türkiye Geneli</span>
             </div>
             <div>
-                <span class="text-slate-500 block text-[9px] tracking-widest">NEREDE</span>
+                <span class="text-slate-500 block text-[9px] tracking-widest" id="i18n-lbl-where">NEREDE</span>
                 <span id="col-where" class="text-slate-200 font-medium">81 İl Archive</span>
             </div>
             <div>
-                <span class="text-slate-500 block text-[9px] tracking-widest">BAHANE / NEDEN</span>
+                <span class="text-slate-500 block text-[9px] tracking-widest" id="i18n-lbl-motive">BAHANE / NEDEN</span>
                 <span id="col-motive" class="text-slate-200 font-medium">Erkek Şiddeti & Şüpheli</span>
             </div>
             <div>
-                <span class="text-slate-500 block text-[9px] tracking-widest">DURUM</span>
+                <span class="text-slate-500 block text-[9px] tracking-widest" id="i18n-lbl-status">DURUM</span>
                 <span id="col-status" class="text-rose-400 font-semibold">Aktif Veri</span>
             </div>
         </div>
 
         <div class="pointer-events-auto text-[11px] text-slate-300 flex flex-col gap-0.5 items-start md:items-end">
             <div>
-                <span class="text-slate-400">Veri Kaynağı:</span>
+                <span class="text-slate-400" id="i18n-source-lbl">Veri Kaynağı:</span>
                 <a href="https://kadincinayetlerinidurduracagiz.net" target="_blank" rel="noopener noreferrer" class="text-rose-300 hover:text-white font-medium ml-1 underline">
                     Kadın Cinayetlerini Durduracağız Platformu
                 </a>
             </div>
             <div>
-                <span class="text-slate-400">GIS Arşivi:</span>
+                <span class="text-slate-400" id="i18n-gis-lbl">GIS Arşivi:</span>
                 <a href="https://www.arcgis.com/apps/dashboards/b3a5601b2807414c964d4a4089c1c575" target="_blank" rel="noopener noreferrer" class="text-purple-300 hover:text-white font-medium ml-1 underline">
                     Coğrafya'nın Kadın Kaderi
                 </a>
@@ -171,7 +175,7 @@
     <div class="absolute bottom-20 md:bottom-6 left-4 sm:left-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 min-w-[260px] sm:min-w-[320px]">
         <div class="space-y-1">
             <div class="text-slate-100 font-bold text-sm">
-                <span id="active-count" class="text-rose-400 font-extrabold text-base">0</span> Vaka Gösteriliyor
+                <span id="active-count" class="text-rose-400 font-extrabold text-base">0</span> <span id="i18n-cases-shown">Vaka Gösteriliyor</span>
             </div>
             <div class="text-[11px] text-slate-400 leading-tight" id="filter-status-text">
                 Filtre: Tüm Yıllar | Tüm İller
@@ -187,12 +191,12 @@
         </div>
     </div>
 
-    <!-- Sağ Alt Katilin Motivasyonu & İzolasyon (Mobilde üstte, masaüstünde sağ altta saf şeffaf layover) -->
-    <div id="motive-analytics-panel" class="absolute top-28 md:bottom-6 md:top-auto right-4 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-[280px] sm:max-w-sm w-full max-h-[40vh] md:max-h-[calc(100vh-160px)] flex flex-col hidden p-0">
+    <!-- Sağ Alt Katilin Motivasyonu & İzolasyon (Mobilde üst sağa çakışmayı önleyecek şekilde yerleştirildi) -->
+    <div id="motive-analytics-panel" class="absolute top-36 md:bottom-6 md:top-auto right-4 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-[240px] sm:max-w-sm w-full max-h-[35vh] md:max-h-[calc(100vh-160px)] flex flex-col hidden bg-plum-950/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-3 md:p-0 rounded-2xl md:rounded-none border border-purple-500/20 md:border-none shadow-xl md:shadow-none">
         <div class="flex justify-between items-center pb-2 border-b border-purple-500/20 mb-2 shrink-0">
-            <span class="text-slate-100 font-bold text-xs tracking-wider">katil erkeğin motivasyonu</span>
+            <span class="text-slate-100 font-bold text-[11px] sm:text-xs tracking-wider" id="i18n-motive-title">katil erkeğin motivasyonu</span>
             <div class="flex items-center gap-2">
-                <button id="reset-isolation" class="text-[11px] text-purple-300 hover:text-white underline font-medium hidden">[ Filtreyi Kaldır ]</button>
+                <button id="reset-isolation" class="text-[11px] text-purple-300 hover:text-white underline font-medium hidden" id="i18n-reset-isolation">[ Filtreyi Kaldır ]</button>
                 <button id="toggle-motive-panel" class="text-slate-300 hover:text-white px-1.5 py-0.5 rounded font-bold text-sm transition" title="Paneli Küçült / Gizle">▼</button>
             </div>
         </div>
@@ -202,13 +206,13 @@
     <!-- Alt Menü Butonları -->
     <div class="absolute bottom-3 inset-x-0 z-20 flex justify-center pointer-events-none px-3">
         <div class="pointer-events-auto bg-plum-950/90 border border-purple-500/30 backdrop-blur-xl rounded-full px-4 py-2 flex items-center flex-wrap justify-center gap-2.5 sm:space-x-6 text-xs font-mono shadow-2xl text-slate-200">
-            <button id="btn-years" class="hover:text-white transition tracking-wider font-semibold">YILLAR</button>
+            <button id="btn-years" class="hover:text-white transition tracking-wider font-semibold" id="i18n-btn-years">YILLAR</button>
             <span class="text-slate-600 hidden sm:inline">|</span>
-            <button id="btn-status" class="hover:text-white transition tracking-wider font-semibold">DURUM</button>
+            <button id="btn-status" class="hover:text-white transition tracking-wider font-semibold" id="i18n-btn-status">DURUM</button>
             <span class="text-slate-600 hidden sm:inline">|</span>
-            <button id="btn-city" class="hover:text-white transition tracking-wider font-semibold">ŞEHİR</button>
+            <button id="btn-city" class="hover:text-white transition tracking-wider font-semibold" id="i18n-btn-city">ŞEHİR</button>
             <span class="text-slate-600 hidden sm:inline">|</span>
-            <button id="btn-search" class="hover:text-white transition tracking-wider font-semibold">ARAMA</button>
+            <button id="btn-search" class="hover:text-white transition tracking-wider font-semibold" id="i18n-btn-search">ARAMA</button>
         </div>
     </div>
 
@@ -217,9 +221,9 @@
         <div class="pointer-events-auto bg-plum-950/98 border border-purple-500/30 backdrop-blur-2xl rounded-3xl p-5 max-w-lg w-full max-h-[60vh] overflow-y-auto text-xs font-mono shadow-2xl space-y-4">
             
             <div id="sec-years" class="space-y-2">
-                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">Yıl Seçimi</span>
+                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold" id="i18n-drawer-years">Yıl Seçimi</span>
                 <div class="flex flex-wrap gap-1.5" id="year-buttons">
-                    <button data-year="all" class="year-btn bg-purple-600 text-white px-3 py-1.5 rounded-xl font-medium transition text-xs">TÜMÜ</button>
+                    <button data-year="all" class="year-btn bg-purple-600 text-white px-3 py-1.5 rounded-xl font-medium transition text-xs" id="i18n-yr-all">TÜMÜ</button>
                     <button data-year="2021" class="year-btn bg-plum-900 hover:bg-plum-800 text-slate-200 px-3 py-1.5 rounded-xl transition text-xs">2021</button>
                     <button data-year="2022" class="year-btn bg-plum-900 hover:bg-plum-800 text-slate-200 px-3 py-1.5 rounded-xl transition text-xs">2022</button>
                     <button data-year="2023" class="year-btn bg-plum-900 hover:bg-plum-800 text-slate-200 px-3 py-1.5 rounded-xl transition text-xs">2023</button>
@@ -230,18 +234,18 @@
             </div>
 
             <div id="sec-status" class="space-y-2 hidden">
-                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">Vaka Durumu</span>
+                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold" id="i18n-drawer-status">Vaka Durumu</span>
                 <div class="flex flex-wrap gap-2">
-                    <button data-status="all" class="status-btn bg-purple-600 text-white px-3.5 py-1.5 rounded-xl transition text-xs font-medium">TÜMÜ</button>
-                    <button data-status="Cinayet" class="status-btn bg-plum-900 hover:bg-plum-800 text-rose-300 px-3.5 py-1.5 rounded-xl border border-rose-500/30 transition text-xs font-medium">KADIN CİNAYETİ</button>
-                    <button data-status="Şüpheli Ölüm" class="status-btn bg-plum-900 hover:bg-plum-800 text-amber-300 px-3.5 py-1.5 rounded-xl border border-amber-500/30 transition text-xs font-medium">ŞÜPHELİ ÖLÜM</button>
+                    <button data-status="all" class="status-btn bg-purple-600 text-white px-3.5 py-1.5 rounded-xl transition text-xs font-medium" id="i18n-st-all">TÜMÜ</button>
+                    <button data-status="Cinayet" class="status-btn bg-plum-900 hover:bg-plum-800 text-rose-300 px-3.5 py-1.5 rounded-xl border border-rose-500/30 transition text-xs font-medium" id="i18n-st-femicide">KADIN CİNAYETİ</button>
+                    <button data-status="Şüpheli Ölüm" class="status-btn bg-plum-900 hover:bg-plum-800 text-amber-300 px-3.5 py-1.5 rounded-xl border border-amber-500/30 transition text-xs font-medium" id="i18n-st-suspicious">ŞÜPHELİ ÖLÜM</button>
                 </div>
             </div>
 
             <div id="sec-city" class="space-y-2 hidden">
-                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">Bölge Filtresi</span>
+                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold" id="i18n-drawer-city">Bölge Filtresi</span>
                 <select id="city-select" class="w-full bg-plum-900 border border-purple-500/30 rounded-xl px-3 py-2 text-slate-100 text-xs focus:outline-none focus:border-purple-400">
-                    <option value="all">Tüm Türkiye</option>
+                    <option value="all" id="i18n-opt-all-turkey">Tüm Türkiye</option>
                     <option value="İstanbul">İstanbul</option>
                     <option value="Ankara">Ankara</option>
                     <option value="İzmir">İzmir</option>
@@ -256,17 +260,17 @@
                     <option value="Samsun">Samsun</option>
                     <option value="Eskişehir">Eskişehir</option>
                     <option value="Şanlıurfa">Şanlıurfa</option>
-                    <option value="Türkiye Geneli">Türkiye Geneli / Bilinmeyen Lokasyon</option>
+                    <option value="Türkiye Geneli" id="i18n-opt-gen-turkey">Türkiye Geneli / Bilinmeyen Lokasyon</option>
                 </select>
             </div>
 
             <div id="sec-search" class="space-y-2 hidden">
-                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">Anahtar Kelime Ara</span>
+                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold" id="i18n-drawer-search">Anahtar Kelime Ara</span>
                 <input type="text" id="search-input" placeholder="İsim, ilçe veya detay ara..." class="w-full bg-plum-900 border border-purple-500/30 rounded-xl px-3 py-2 text-slate-100 placeholder-slate-500 text-xs focus:outline-none focus:border-purple-400">
             </div>
 
             <div class="text-right pt-2 border-t border-purple-500/20">
-                <button id="close-drawer" class="text-slate-300 hover:text-white text-[11px] uppercase tracking-widest font-bold">Kapat</button>
+                <button id="close-drawer" class="text-slate-300 hover:text-white text-[11px] uppercase tracking-widest font-bold" id="i18n-btn-close">Kapat</button>
             </div>
         </div>
     </div>
@@ -278,19 +282,19 @@
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono uppercase tracking-wider text-slate-300 border-b border-purple-500/20 pb-4">
                 <div>
-                    <span class="text-slate-400 block text-[10px]">NE ZAMAN</span>
+                    <span class="text-slate-400 block text-[10px]" id="i18n-modal-lbl-when">NE ZAMAN</span>
                     <span id="modal-when" class="text-slate-100 font-medium">-</span>
                 </div>
                 <div>
-                    <span class="text-slate-400 block text-[10px]">NEREDE</span>
+                    <span class="text-slate-400 block text-[10px]" id="i18n-modal-lbl-where">NEREDE</span>
                     <span id="modal-where" class="text-slate-100 font-medium">-</span>
                 </div>
                 <div>
-                    <span class="text-slate-400 block text-[10px]">DURUM</span>
+                    <span class="text-slate-400 block text-[10px]" id="i18n-modal-lbl-status">DURUM</span>
                     <span id="modal-status" class="text-rose-400 font-semibold">-</span>
                 </div>
                 <div>
-                    <span class="text-slate-400 block text-[10px]">BAHANE</span>
+                    <span class="text-slate-400 block text-[10px]" id="i18n-modal-lbl-motive">BAHANE</span>
                     <span id="modal-motive" class="text-purple-300 font-medium">-</span>
                 </div>
             </div>
@@ -310,16 +314,167 @@
 
             <div class="pt-2 border-t border-purple-500/20 flex justify-between items-center text-xs font-mono text-slate-300">
                 <div id="modal-source-container">
-                    <span>Haber Kaynağı: </span>
-                    <a id="modal-source-link" href="#" target="_blank" class="text-rose-400 hover:underline">Git ↗</a>
+                    <span id="i18n-modal-news-lbl">Haber Kaynağı: </span>
+                    <a id="modal-source-link" href="#" target="_blank" class="text-rose-400 hover:underline"><span id="i18n-modal-go">Git</span> ↗</a>
                 </div>
                 <div id="modal-coordinates" class="text-xs text-slate-400">-</div>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Mantığı -->
+    <!-- JavaScript Mantığı & Dil Çevirileri -->
     <script>
+        let currentLang = 'TR'; // 'TR' veya 'EN'
+
+        const translations = {
+            TR: {
+                title: "FEMICIDE MAP OF TURKEY",
+                manifestoBtn: "Bildiri",
+                quote: `"Mekân, yalnızca coğrafya değil; hafızanın, direnişin ve adalet arayışının haritasıdır."`,
+                manifestoText: "Bu dijital arşiv, 2021-2026 yılları arasında Türkiye'nin 81 ilinde erkek şiddeti sonucu yaşamını yitiren ve şüpheli şekilde ölü bulunan kadınların mekânsal hafızasını tutar.",
+                when: "NE ZAMAN",
+                who: "KİM / KİŞİ",
+                where: "NEREDE",
+                motive: "BAHANE / NEDEN",
+                status: "DURUM",
+                source: "Veri Kaynağı:",
+                gis: "GIS Arşivi:",
+                casesShown: "Vaka Gösteriliyor",
+                filterPrefix: "Filtre: Yıl",
+                allYears: "Tüm Yıllar",
+                allCities: "Tüm İller",
+                allTurkey: "Tüm Türkiye",
+                genTurkey: "Türkiye Geneli / Bilinmeyen Lokasyon",
+                motiveTitle: "katil erkeğin motivasyonu",
+                resetFilter: "[ Filtreyi Kaldır ]",
+                years: "YILLAR",
+                btnStatus: "DURUM",
+                city: "ŞEHİR",
+                search: "ARAMA",
+                drawerYears: "Yıl Seçimi",
+                drawerStatus: "Vaka Durumu",
+                drawerCity: "Bölge Filtresi",
+                drawerSearch: "Anahtar Kelime Ara",
+                all: "TÜMÜ",
+                femicide: "KADIN CİNAYETİ",
+                suspicious: "ŞÜPHELİ ÖLÜM",
+                close: "Kapat",
+                searchPlaceholder: "İsim, ilçe veya detay ara...",
+                newsSource: "Haber Kaynağı:",
+                go: "Git",
+                motives: {
+                    "Boşanma / Ayrılma Talebi": "Divorce / Separation Request",
+                    "Kıskançlık / İlişki Tartışması": "Jealousy / Relationship Dispute",
+                    "Ekonomik Sebepler": "Economic Reasons",
+                    "Tartışma / Geçimsizlik": "Argument / Incompatibility",
+                    "Şüpheli Ölüm": "Suspicious Death",
+                    "Psikolojik Sebepler": "Psychological Reasons",
+                    "Koruma Kararına Rağmen": "Despite Restraining Order",
+                    "Belirtilmemiş / Diğer": "Unspecified / Other"
+                }
+            },
+            EN: {
+                title: "FEMICIDE MAP OF TURKEY",
+                manifestoBtn: "Manifesto",
+                quote: `"Space is not merely geography; it is a map of memory, resistance, and the search for justice."`,
+                manifestoText: "This digital archive records the spatial memory of women murdered by male violence and found dead under suspicious circumstances in 81 provinces of Turkey between 2021 and 2026.",
+                when: "WHEN",
+                who: "WHO / VICTIM",
+                where: "WHERE",
+                motive: "MOTIVE / REASON",
+                status: "STATUS",
+                source: "Data Source:",
+                gis: "GIS Archive:",
+                casesShown: "Cases Shown",
+                filterPrefix: "Filter: Year",
+                allYears: "All Years",
+                allCities: "All Cities",
+                allTurkey: "All Turkey",
+                genTurkey: "Turkey General / Unknown Location",
+                motiveTitle: "perpetrator's motive",
+                resetFilter: "[ Clear Filter ]",
+                years: "YEARS",
+                btnStatus: "STATUS",
+                city: "CITY",
+                search: "SEARCH",
+                drawerYears: "Select Year",
+                drawerStatus: "Case Status",
+                drawerCity: "Region Filter",
+                drawerSearch: "Search Keyword",
+                all: "ALL",
+                femicide: "FEMICIDE",
+                suspicious: "SUSPICIOUS DEATH",
+                close: "Close",
+                searchPlaceholder: "Search name, district or detail...",
+                newsSource: "News Source:",
+                go: "View",
+                motives: {
+                    "Boşanma / Ayrılma Talebi": "Divorce / Separation Request",
+                    "Kıskançlık / İlişki Tartışması": "Jealousy / Relationship Dispute",
+                    "Ekonomik Sebepler": "Economic Reasons",
+                    "Tartışma / Geçimsizlik": "Argument / Incompatibility",
+                    "Şüpheli Ölüm": "Suspicious Death",
+                    "Psikolojik Sebepler": "Psychological Reasons",
+                    "Koruma Kararına Rağmen": "Despite Restraining Order",
+                    "Belirtilmemiş / Diğer": "Unspecified / Other"
+                }
+            }
+        };
+
+        function updateUIWithLanguage() {
+            const t = translations[currentLang];
+
+            document.getElementById('i18n-manifesto-btn').textContent = t.manifestoBtn;
+            document.getElementById('i18n-manifesto-quote').textContent = t.quote;
+            document.getElementById('i18n-manifesto-text').textContent = t.manifestoText;
+            document.getElementById('i18n-lbl-when').textContent = t.when;
+            document.getElementById('i18n-lbl-who').textContent = t.who;
+            document.getElementById('i18n-lbl-where').textContent = t.where;
+            document.getElementById('i18n-lbl-motive').textContent = t.motive;
+            document.getElementById('i18n-lbl-status').textContent = t.status;
+            document.getElementById('i18n-source-lbl').textContent = t.source;
+            document.getElementById('i18n-gis-lbl').textContent = t.gis;
+            document.getElementById('i18n-cases-shown').textContent = t.casesShown;
+            document.getElementById('i18n-motive-title').textContent = t.motiveTitle;
+            document.getElementById('reset-isolation').textContent = t.resetFilter;
+
+            document.getElementById('btn-years').textContent = t.years;
+            document.getElementById('btn-status').textContent = t.btnStatus;
+            document.getElementById('btn-city').textContent = t.city;
+            document.getElementById('btn-search').textContent = t.search;
+
+            document.getElementById('i18n-drawer-years').textContent = t.drawerYears;
+            document.getElementById('i18n-drawer-status').textContent = t.drawerStatus;
+            document.getElementById('i18n-drawer-city').textContent = t.drawerCity;
+            document.getElementById('i18n-drawer-search').textContent = t.drawerSearch;
+
+            document.getElementById('i18n-yr-all').textContent = t.all;
+            document.getElementById('i18n-st-all').textContent = t.all;
+            document.getElementById('i18n-st-femicide').textContent = t.femicide;
+            document.getElementById('i18n-st-suspicious').textContent = t.suspicious;
+            document.getElementById('i18n-btn-close').textContent = t.close;
+
+            document.getElementById('i18n-opt-all-turkey').textContent = t.allTurkey;
+            document.getElementById('i18n-opt-gen-turkey').textContent = t.genTurkey;
+            document.getElementById('search-input').placeholder = t.searchPlaceholder;
+
+            document.getElementById('i18n-modal-lbl-when').textContent = t.when;
+            document.getElementById('i18n-modal-lbl-where').textContent = t.where;
+            document.getElementById('i18n-modal-lbl-status').textContent = t.status;
+            document.getElementById('i18n-modal-lbl-motive').textContent = t.motive;
+            document.getElementById('i18n-modal-news-lbl').textContent = t.newsSource;
+            document.getElementById('i18n-modal-go').textContent = t.go;
+
+            document.getElementById('lang-toggle-btn').textContent = currentLang === 'TR' ? 'EN' : 'TR';
+
+            renderMarkers();
+        }
+
+        document.getElementById('lang-toggle-btn').addEventListener('click', () => {
+            currentLang = currentLang === 'TR' ? 'EN' : 'TR';
+            updateUIWithLanguage();
+        });
+
         let allDataset = [];
         let currentYear = 'all';
         let currentStatus = 'all';
@@ -371,13 +526,13 @@
             return colors[Math.abs(hash) % colors.length];
         }
 
-            const map = L.map('map', {
+        const map = L.map('map', {
             zoomControl: false,
             center: [39.0, 35.2],
             zoom: 7,
             minZoom: 5,
             maxZoom: 18,
-            preferCanvas: true // <-- Bu satır tüm noktaları DOM yerine Canvas'a taşıyarak mobil hızı katlar!
+            preferCanvas: true
         });
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -388,12 +543,7 @@
         async function loadAllData() {
             allDataset = [];
             
-            const dataFiles = [
-                // 'femicide_data.json',
-                // 'femicide_auto.json',
-                'femicide_arcgis.json',
-                // '2021.json', '2022.json', '2023.json', '2024.json', '2025.json', '2026.json'
-            ];
+            const dataFiles = ['femicide_arcgis.json'];
 
             for (const file of dataFiles) {
                 try {
@@ -461,14 +611,18 @@
                 const color = getColorByMotive(motive);
                 const isSelected = isolatedMotive === motive;
 
+                const displayMotive = (currentLang === 'EN' && translations.EN.motives[motive]) 
+                    ? translations.EN.motives[motive] 
+                    : motive;
+
                 const row = document.createElement('div');
                 row.className = `cursor-pointer p-1 rounded transition ${isSelected ? 'border-b border-purple-400' : 'hover:opacity-80'}`;
-                row.title = `${motive}: ${count} vaka (${percentage}%) - İzole etmek için tıklayın`;
+                row.title = `${displayMotive}: ${count} vaka (${percentage}%)`;
                 
                 row.innerHTML = `
                     <div class="flex justify-between text-xs text-slate-200 mb-0.5 font-medium">
-                        <span class="truncate max-w-[200px]" title="${motive}">${motive}</span>
-                        <span class="font-bold">${count} (${percentage}%)</span>
+                        <span class="truncate max-w-[180px]" title="${displayMotive}">${displayMotive}</span>
+                        <span class="font-bold ml-1">${count} (${percentage}%)</span>
                     </div>
                     <div class="w-full bg-plum-900/60 h-1.5 rounded-full overflow-hidden">
                         <div class="h-full transition-all duration-300" style="width: ${percentage}%; background-color: ${color};"></div>
@@ -503,11 +657,9 @@
             if (motivePanelCollapsed) {
                 container.style.display = 'none';
                 arrowBtn.textContent = '▲';
-                arrowBtn.title = 'Paneli Göster';
             } else {
                 container.style.display = 'block';
                 arrowBtn.textContent = '▼';
-                arrowBtn.title = 'Paneli Küçült / Gizle';
             }
         });
 
@@ -600,17 +752,28 @@
             });
 
             document.getElementById('active-count').textContent = filtered.length;
-            const cityText = (currentCity === 'all') ? 'Tüm Türkiye' : currentCity;
-            document.getElementById('filter-status-text').textContent = `Filtre: Yıl (${currentYear}) | Durum (${currentStatus}) | Şehir (${cityText})`;
+            
+            const t = translations[currentLang];
+            const cityText = (currentCity === 'all') ? t.allTurkey : currentCity;
+            const yearText = (currentYear === 'all') ? t.allYears : currentYear;
+            const statusText = (currentStatus === 'all') ? t.all : (currentStatus === 'Cinayet' ? t.femicide : t.suspicious);
+
+            document.getElementById('filter-status-text').textContent = `${t.filterPrefix} (${yearText}) | ${t.status} (${statusText}) | ${t.city} (${cityText})`;
         }
 
         function openModal(item) {
+            const t = translations[currentLang];
             document.getElementById('modal-when').textContent = `${item.year || '2026'} ${item.month || ''}`;
             document.getElementById('modal-where').textContent = `${item.city || 'Bilinmiyor'} / ${item.district || 'Merkez'}`;
-            document.getElementById('modal-status').textContent = item.status || 'Cinayet';
-            document.getElementById('modal-motive').textContent = item.motive || 'Belirtilmedi';
+            
+            const stText = (item.status === 'Cinayet' || item.status === 'Kadın Cinayeti') ? t.femicide : (item.status === 'Şüpheli Ölüm' ? t.suspicious : item.status);
+            document.getElementById('modal-status').textContent = stText || t.femicide;
+            
+            const motiveText = (currentLang === 'EN' && t.motives[item.motive]) ? t.motives[item.motive] : (item.motive || '-');
+            document.getElementById('modal-motive').textContent = motiveText;
+            
             document.getElementById('modal-victim').textContent = item.victim || 'Vaka Kaydı';
-            document.getElementById('modal-title').textContent = item.city ? `${item.city} (${item.district || 'Merkez'}) — ${item.status || 'Vaka'}` : 'Vaka Detayı';
+            document.getElementById('modal-title').textContent = item.city ? `${item.city} (${item.district || 'Merkez'}) — ${stText}` : 'Vaka Detayı';
             document.getElementById('modal-desc').textContent = `"${item.text || 'Açıklama bulunmuyor.'}"`;
             document.getElementById('modal-coordinates').textContent = `${parseFloat(item.lat).toFixed(4)}° N, ${parseFloat(item.lng).toFixed(4)}° E`;
 
@@ -628,11 +791,16 @@
         }
 
         function updateTopHeader(item) {
+            const t = translations[currentLang];
             document.getElementById('col-when').textContent = `${item.year || '2026'} ${item.month || ''}`;
             document.getElementById('col-who').textContent = `${item.victim || 'Kayıt'}`;
             document.getElementById('col-where').textContent = `${item.city || ''} / ${item.district || ''}`;
-            document.getElementById('col-motive').textContent = item.motive || '-';
-            document.getElementById('col-status').textContent = item.status || '-';
+            
+            const motiveText = (currentLang === 'EN' && t.motives[item.motive]) ? t.motives[item.motive] : (item.motive || '-');
+            document.getElementById('col-motive').textContent = motiveText;
+
+            const stText = (item.status === 'Cinayet' || item.status === 'Kadın Cinayeti') ? t.femicide : (item.status === 'Şüpheli Ölüm' ? t.suspicious : item.status);
+            document.getElementById('col-status').textContent = stText || '-';
         }
 
         document.getElementById('close-modal').addEventListener('click', () => {
