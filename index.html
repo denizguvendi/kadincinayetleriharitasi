@@ -105,14 +105,14 @@
         <div class="pointer-events-auto max-w-sm sm:max-w-md">
             <div class="flex items-center space-x-2.5">
                 <h1 class="font-mono text-lg sm:text-xl font-bold text-slate-100 tracking-tight">
-                    ÖLMEK İSTEMİYORUZ!
+                    FEMICIDE MAP OF TURKEY
                 </h1>
                 <span class="text-[11px] text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full font-medium">2021–2026</span>
             </div>
 
             <div class="mt-2 text-xs font-sans normal-case">
                 <button id="toggle-manifesto" class="text-xs font-mono uppercase text-purple-300 hover:text-white flex items-center gap-1.5 transition font-medium">
-                    <span id="manifesto-arrow" class="transition-transform duration-200">►</span> <span>Manifesto / Bildiri</span>
+                    <span id="manifesto-arrow" class="transition-transform duration-200">►</span> <span>Bildiri</span>
                 </button>
 
                 <div id="manifesto-box" class="hidden mt-2 text-slate-300 space-y-2 text-xs sm:text-sm leading-relaxed pr-2">
@@ -190,7 +190,7 @@
     <!-- Sağ Alt Katilin Motivasyonu & İzolasyon (Mobilde üstte, masaüstünde sağ altta saf şeffaf layover) -->
     <div id="motive-analytics-panel" class="absolute top-28 md:bottom-6 md:top-auto right-4 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-[280px] sm:max-w-sm w-full max-h-[40vh] md:max-h-[calc(100vh-160px)] flex flex-col hidden p-0">
         <div class="flex justify-between items-center pb-2 border-b border-purple-500/20 mb-2 shrink-0">
-            <span class="text-slate-100 font-bold text-xs tracking-wider">KATILIN MOTİVASYONU</span>
+            <span class="text-slate-100 font-bold text-xs tracking-wider">katil erkeğin motivasyonu</span>
             <div class="flex items-center gap-2">
                 <button id="reset-isolation" class="text-[11px] text-purple-300 hover:text-white underline font-medium hidden">[ Filtreyi Kaldır ]</button>
                 <button id="toggle-motive-panel" class="text-slate-300 hover:text-white px-1.5 py-0.5 rounded font-bold text-sm transition" title="Paneli Küçült / Gizle">▼</button>
@@ -239,7 +239,7 @@
             </div>
 
             <div id="sec-city" class="space-y-2 hidden">
-                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">İl / Bölge Filtresi</span>
+                <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold">Bölge Filtresi</span>
                 <select id="city-select" class="w-full bg-plum-900 border border-purple-500/30 rounded-xl px-3 py-2 text-slate-100 text-xs focus:outline-none focus:border-purple-400">
                     <option value="all">Tüm Türkiye</option>
                     <option value="İstanbul">İstanbul</option>
@@ -256,7 +256,7 @@
                     <option value="Samsun">Samsun</option>
                     <option value="Eskişehir">Eskişehir</option>
                     <option value="Şanlıurfa">Şanlıurfa</option>
-                    <option value="Türkiye Geneli">Türkiye Geneli / Diğer</option>
+                    <option value="Türkiye Geneli">Türkiye Geneli / Bilinmeyen Lokasyon</option>
                 </select>
             </div>
 
@@ -296,8 +296,8 @@
             </div>
 
             <div class="space-y-1">
-                <span id="modal-victim" class="text-xs font-mono text-purple-400 tracking-wider uppercase block font-semibold">Kayıt Detayı</span>
-                <h2 id="modal-title" class="font-serif text-xl sm:text-2xl font-normal text-slate-100 leading-snug">
+                <span id="modal-victim" class="text-xl font-mono text-purple-400 tracking-wider uppercase block font-semibold">Kayıt Detayı</span>
+                <h2 id="modal-title" class="font-serif text-xs sm:text-2xl font-normal text-slate-100 leading-snug">
                     Vaka Başlığı
                 </h2>
             </div>
@@ -389,10 +389,10 @@
             allDataset = [];
             
             const dataFiles = [
-                'femicide_data.json',
-                'femicide_auto.json',
+                // 'femicide_data.json',
+                // 'femicide_auto.json',
                 'femicide_arcgis.json',
-                '2021.json', '2022.json', '2023.json', '2024.json', '2025.json', '2026.json'
+                // '2021.json', '2022.json', '2023.json', '2024.json', '2025.json', '2026.json'
             ];
 
             for (const file of dataFiles) {
