@@ -100,7 +100,7 @@
     <div class="ambient-blob w-[600px] h-[600px] bg-fuchsia-600 bottom-[-100px] right-[-100px]"></div>
 
     <!-- Üst Bilgi Alanı -->
-    <header class="absolute top-0 inset-x-0 z-20 px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between items-start text-xs font-mono tracking-wider uppercase text-slate-300 pointer-events-none bg-gradient-to-b from-plum-950 via-plum-950/80 to-transparent pb-6 gap-3">
+    <header class="absolute top-0 inset-x-0 z-20 px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between items-start text-xs font-mono tracking-wider uppercase text-slate-300 pointer-events-none bg-gradient-to-b from-plum-950 via-plum-950/80 to-transparent pb-4 gap-2">
         
         <div class="pointer-events-auto max-w-sm sm:max-w-md">
             <div class="flex items-center space-x-2.5">
@@ -114,7 +114,7 @@
                 </button>
             </div>
 
-            <div class="mt-2 text-xs font-sans normal-case">
+            <div class="mt-1 text-xs font-sans normal-case">
                 <button id="toggle-manifesto" class="text-xs font-mono uppercase text-purple-300 hover:text-white flex items-center gap-1.5 transition font-medium">
                     <span id="manifesto-arrow" class="transition-transform duration-200">►</span> <span id="i18n-manifesto-btn">Bildiri</span>
                 </button>
@@ -153,7 +153,8 @@
             </div>
         </div>
 
-        <div class="pointer-events-auto text-[11px] text-slate-300 flex flex-col gap-0.5 items-start md:items-end">
+        <!-- Sağ Üst Veri Kaynakları (Mobilde sağa yaslandı, çakışma riski sıfırlandı) -->
+        <div class="pointer-events-auto text-[10px] sm:text-[11px] text-slate-300 flex flex-col gap-0.5 items-end self-end md:self-auto">
             <div>
                 <span class="text-slate-400" id="i18n-source-lbl">Veri Kaynağı:</span>
                 <a href="https://kadincinayetlerinidurduracagiz.net" target="_blank" rel="noopener noreferrer" class="text-rose-300 hover:text-white font-medium ml-1 underline">
@@ -191,10 +192,10 @@
         </div>
     </div>
 
-    <!-- Sağ Alt Katilin Motivasyonu -->
-    <div id="motive-analytics-panel" class="absolute top-32 md:bottom-6 md:top-auto right-4 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-[240px] sm:max-w-xs w-full max-h-[30vh] md:max-h-[calc(100vh-160px)] flex flex-col hidden p-1">
+    <!-- Sağ Alt Katilin Motivasyonu (Mobilde top-28 ile kaynak yazılarının altına indirildi, açık ve net duruyor) -->
+    <div id="motive-analytics-panel" class="absolute top-28 sm:top-24 md:bottom-6 md:top-auto right-4 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-[210px] sm:max-w-xs w-full max-h-[26vh] md:max-h-[calc(100vh-160px)] flex flex-col hidden p-1">
         <div class="flex justify-between items-center pb-1.5 border-b border-purple-500/20 mb-1.5 shrink-0">
-            <span class="text-slate-100 font-bold text-[11px] tracking-wider" id="i18n-motive-title">katil erkeğin motivasyonu</span>
+            <span class="text-slate-100 font-bold text-[10px] sm:text-[11px] tracking-wider" id="i18n-motive-title">katil erkeğin motivasyonu</span>
             <div class="flex items-center gap-2">
                 <button id="reset-isolation" class="text-[10px] text-purple-300 hover:text-white underline font-medium hidden">[ Filtreyi Kaldır ]</button>
                 <button id="toggle-motive-panel" class="text-slate-300 hover:text-white px-1 py-0.5 rounded font-bold text-xs transition" title="Paneli Küçült / Gizle">▼</button>
@@ -260,6 +261,7 @@
                     <option value="Samsun">Samsun</option>
                     <option value="Eskişehir">Eskişehir</option>
                     <option value="Şanlıurfa">Şanlıurfa</option>
+                    <option value="Türkiye Geneli" id="i18n-opt-gen-turkey">Türkiye Geneli / Bilinmeyen Lokasyon</option>
                 </select>
             </div>
 
@@ -333,12 +335,12 @@
                 quote: `"Mekân, yalnızca coğrafya değil; hafızanın, direnişin ve adalet arayışının haritasıdır."`,
                 manifestoText: "Bu dijital arşiv, 2021-2026 yılları arasında Türkiye'nin 81 ilinde erkek şiddeti sonucu yaşamını yitiren ve şüpheli şekilde ölü bulunan kadınların mekânsal hafızasını tutar.",
                 when: "NE ZAMAN",
-                who: "KİM",
+                who: "KİM / KİŞİ",
                 where: "NEREDE",
                 motive: "BAHANE",
                 status: "DURUM",
                 defaultWho: "Türkiye Geneli",
-                defaultWhere: "81 İl Arşiv",
+                defaultWhere: "81 İl Açık Veri Tabanlı Arşiv",
                 defaultMotive: "Erkek Şiddeti & Şüpheli",
                 defaultStatus: "Aktif Veri",
                 source: "Veri Kaynağı:",
@@ -378,7 +380,7 @@
                 where: "WHERE",
                 motive: "MOTIVE",
                 status: "STATUS",
-                defaultWho: "Turkiye General",
+                defaultWho: "Turkey General",
                 defaultWhere: "81 Provinces Archive",
                 defaultMotive: "Male Violence & Suspicious",
                 defaultStatus: "Active Data",
@@ -411,9 +413,8 @@
             }
         };
 
-        // Otomatik Motivasyon Çevirici (Tüm veri varyasyonlarını kapsar)
         function getTranslatedMotive(motiveRaw) {
-            if (!motiveRaw) return currentLang === 'EN' ? 'Unspecified / Other' : 'Belirtilmemiş / Diğer';
+            if (!motiveRaw) return currentLang === 'EN' ? 'Unspecified' : 'Belirtilmemiş';
             if (currentLang === 'TR') return motiveRaw;
 
             const m = motiveRaw.toLowerCase();
@@ -421,11 +422,11 @@
             if (m.includes('boşan') || m.includes('ayrıl') || m.includes('reddedil')) return 'Divorce / Separation Request';
             if (m.includes('kıskanç') || m.includes('ilişki') || m.includes('sadakat')) return 'Jealousy / Relationship Dispute';
             if (m.includes('ekonomik') || m.includes('para') || m.includes('mal')) return 'Economic Reasons';
-            if (m.includes('tartışma') || m.includes('geçimsizlik') || m.includes('laf')) return 'Argument / Incompatibility';
+            if (m.includes('tartışma') || m.includes('geçimsizlik') || m.includes('laf')) return 'Argument';
             if (m.includes('şüpheli')) return 'Suspicious Death';
             if (m.includes('psikolojik')) return 'Psychological Reasons';
             if (m.includes('koruma') || m.includes('uzaklaştırma')) return 'Despite Restraining Order';
-            if (m.includes('namus') || m.includes('töre')) return 'Honor & Custom Killing';
+            if (m.includes('namus') || m.includes('töre')) return '"Honor" Killing';
             if (m.includes('cinsel') || m.includes('tecavüz')) return 'Sexual Assault & Rape';
             if (m.includes('bakıma') || m.includes('hastalık')) return 'Care Dependency & Illness';
             if (m.includes('baskı')) return 'Social Pressure';
@@ -643,8 +644,8 @@
                 row.className = `cursor-pointer p-0.5 rounded transition ${isSelected ? 'border-b border-purple-400' : 'hover:opacity-80'}`;
                 
                 row.innerHTML = `
-                    <div class="flex justify-between text-[11px] text-slate-200 mb-0.5 font-medium">
-                        <span class="truncate max-w-[170px]" title="${displayMotive}">${displayMotive}</span>
+                    <div class="flex justify-between text-[10px] sm:text-[11px] text-slate-200 mb-0.5 font-medium">
+                        <span class="truncate max-w-[130px] sm:max-w-[170px]" title="${displayMotive}">${displayMotive}</span>
                         <span class="font-bold ml-1">${count} (${percentage}%)</span>
                     </div>
                     <div class="w-full bg-plum-900/60 h-1 rounded-full overflow-hidden">
