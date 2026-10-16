@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Türkiye Spatial Archive — Kadın Cinayetleri & Şüpheli Ölümler (2021–2026)</title>
     
-    <!-- Tailwind CSS -->
+    <!-- tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,12 +27,12 @@
         }
     </script>
 
-    <!-- Google Fonts -->
+    <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
-    <!-- Leaflet CSS & JS -->
+    <!-- leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -99,31 +99,30 @@
     <div class="ambient-blob w-[500px] h-[500px] bg-purple-700 top-[-100px] left-[-100px]"></div>
     <div class="ambient-blob w-[600px] h-[600px] bg-fuchsia-600 bottom-[-100px] right-[-100px]"></div>
 
-    <!-- Üst Bilgi Alanı -->
-    <header class="absolute top-0 inset-x-0 z-20 px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between items-start text-xs font-mono tracking-wider uppercase text-slate-300 pointer-events-none bg-gradient-to-b from-plum-950 via-plum-950/80 to-transparent pb-4 gap-2">
+    <!-- header -->
+    <header class="absolute top-0 inset-x-0 z-20 px-3 sm:px-6 py-3 flex flex-col md:flex-row justify-between items-start text-xs font-mono tracking-wider uppercase text-slate-300 pointer-events-none bg-gradient-to-b from-plum-950 via-plum-950/90 to-transparent pb-3 gap-2">
         
         <div class="pointer-events-auto max-w-sm sm:max-w-md">
-            <div class="flex items-center space-x-2.5">
-                <h1 class="font-mono text-lg sm:text-xl font-bold text-slate-100 tracking-tight" id="i18n-title">
+            <div class="flex items-center space-x-2">
+                <h1 class="font-mono text-base sm:text-xl font-bold text-slate-100 tracking-tight" id="i18n-title">
                     FEMICIDE MAP OF TURKEY
                 </h1>
-                <span class="text-[11px] text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full font-medium">2021–2026</span>
-                <!-- Dil Değiştirme Butonu -->
-                <button id="lang-toggle-btn" class="ml-2 bg-purple-900/60 hover:bg-purple-800 border border-purple-500/40 text-purple-200 text-[10px] font-mono px-2 py-0.5 rounded-md transition font-bold">
+                <span class="text-[10px] sm:text-[11px] text-purple-300 border border-purple-500/30 px-1.5 py-0.5 rounded-full font-medium">2021–2026</span>
+                <button id="lang-toggle-btn" class="ml-1 bg-purple-900/60 hover:bg-purple-800 border border-purple-500/40 text-purple-200 text-[10px] font-mono px-2 py-0.5 rounded-md transition font-bold">
                     EN
                 </button>
             </div>
 
             <div class="mt-1 text-xs font-sans normal-case">
-                <button id="toggle-manifesto" class="text-xs font-mono uppercase text-purple-300 hover:text-white flex items-center gap-1.5 transition font-medium">
+                <button id="toggle-manifesto" class="text-[11px] sm:text-xs font-mono uppercase text-purple-300 hover:text-white flex items-center gap-1.5 transition font-medium">
                     <span id="manifesto-arrow" class="transition-transform duration-200">►</span> <span id="i18n-manifesto-btn">Bildiri</span>
                 </button>
 
-                <div id="manifesto-box" class="hidden mt-2 text-slate-300 space-y-2 text-xs sm:text-sm leading-relaxed pr-2">
+                <div id="manifesto-box" class="hidden mt-1 text-slate-300 space-y-1.5 text-xs sm:text-sm leading-relaxed pr-2">
                     <p class="italic font-serif text-slate-100" id="i18n-manifesto-quote">
                         "Mekân, yalnızca coğrafya değil; hafızanın, direnişin ve adalet arayışının haritasıdır."
                     </p>
-                    <p class="text-slate-400 text-xs" id="i18n-manifesto-text">
+                    <p class="text-slate-400 text-[11px]" id="i18n-manifesto-text">
                         Bu dijital arşiv, 2021-2026 yılları arasında Türkiye'nin 81 ilinde erkek şiddeti sonucu yaşamını yitiren ve şüpheli şekilde ölü bulunan kadınların mekânsal hafızasını tutar.
                     </p>
                 </div>
@@ -153,8 +152,8 @@
             </div>
         </div>
 
-        <!-- Sağ Üst Veri Kaynakları (Mobilde sağa yaslandı, çakışma riski sıfırlandı) -->
-        <div class="pointer-events-auto text-[10px] sm:text-[11px] text-slate-300 flex flex-col gap-0.5 items-end self-end md:self-auto">
+        <!-- kaynaklar -->
+        <div class="pointer-events-auto text-[9px] sm:text-[11px] text-slate-300 flex flex-col gap-0.5 items-end self-end md:self-auto opacity-90">
             <div>
                 <span class="text-slate-400" id="i18n-source-lbl">Veri Kaynağı:</span>
                 <a href="https://kadincinayetlerinidurduracagiz.net" target="_blank" rel="noopener noreferrer" class="text-rose-300 hover:text-white font-medium ml-1 underline">
@@ -170,43 +169,44 @@
         </div>
     </header>
 
+    <!-- harita -->
     <div id="map"></div>
 
-    <!-- Sol Alt Sayaç ve Yıllara Göre Dağılım -->
-    <div class="absolute bottom-20 md:bottom-6 left-4 sm:left-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 min-w-[260px] sm:min-w-[320px]">
-        <div class="space-y-1">
-            <div class="text-slate-100 font-bold text-sm">
-                <span id="active-count" class="text-rose-400 font-extrabold text-base">0</span> <span id="i18n-cases-shown">Vaka Gösteriliyor</span>
+    <!-- sayaç -->
+    <div class="absolute bottom-16 md:bottom-6 left-3 sm:left-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 min-w-[240px] sm:min-w-[320px]">
+        <div class="space-y-0.5 sm:space-y-1">
+            <div class="text-slate-100 font-bold text-xs sm:text-sm">
+                <span id="active-count" class="text-rose-400 font-extrabold text-sm sm:text-base">0</span> <span id="i18n-cases-shown">Vaka Gösteriliyor</span>
             </div>
-            <div class="text-[11px] text-slate-400 leading-tight" id="filter-status-text">
+            <div class="text-[10px] sm:text-[11px] text-slate-400 leading-tight" id="filter-status-text">
                 Filtre: Tüm Yıllar | Tüm İller
             </div>
         </div>
-        <div class="mt-2 pt-1.5 border-t border-purple-500/10 grid grid-cols-6 gap-1 text-[10px] text-slate-300 text-center">
-            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#38bdf8] mb-1"></span><span id="count-21" class="font-bold">0</span><span class="text-[9px] text-slate-400">21</span></div>
-            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#f472b6] mb-1"></span><span id="count-22" class="font-bold">0</span><span class="text-[9px] text-slate-400">22</span></div>
-            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#fb923c] mb-1"></span><span id="count-23" class="font-bold">0</span><span class="text-[9px] text-slate-400">23</span></div>
-            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#34d399] mb-1"></span><span id="count-24" class="font-bold">0</span><span class="text-[9px] text-slate-400">24</span></div>
-            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#c084fc] mb-1"></span><span id="count-25" class="font-bold">0</span><span class="text-[9px] text-slate-400">25</span></div>
-            <div class="flex flex-col items-center"><span class="w-2.5 h-2.5 rounded-full bg-[#fb7185] mb-1"></span><span id="count-26" class="font-bold">0</span><span class="text-[9px] text-slate-400">26</span></div>
+        <div class="mt-1.5 pt-1 border-t border-purple-500/10 grid grid-cols-6 gap-1 text-[10px] text-slate-300 text-center">
+            <div class="year-filter-box cursor-pointer hover:opacity-75 transition flex flex-col items-center" data-year="2021"><span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#38bdf8] mb-0.5"></span><span id="count-21" class="font-bold">0</span><span class="text-[8px] sm:text-[9px] text-slate-400">21</span></div>
+            <div class="year-filter-box cursor-pointer hover:opacity-75 transition flex flex-col items-center" data-year="2022"><span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#f472b6] mb-0.5"></span><span id="count-22" class="font-bold">0</span><span class="text-[8px] sm:text-[9px] text-slate-400">22</span></div>
+            <div class="year-filter-box cursor-pointer hover:opacity-75 transition flex flex-col items-center" data-year="2023"><span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#fb923c] mb-0.5"></span><span id="count-23" class="font-bold">0</span><span class="text-[8px] sm:text-[9px] text-slate-400">23</span></div>
+            <div class="year-filter-box cursor-pointer hover:opacity-75 transition flex flex-col items-center" data-year="2024"><span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#34d399] mb-0.5"></span><span id="count-24" class="font-bold">0</span><span class="text-[8px] sm:text-[9px] text-slate-400">24</span></div>
+            <div class="year-filter-box cursor-pointer hover:opacity-75 transition flex flex-col items-center" data-year="2025"><span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#c084fc] mb-0.5"></span><span id="count-25" class="font-bold">0</span><span class="text-[8px] sm:text-[9px] text-slate-400">25</span></div>
+            <div class="year-filter-box cursor-pointer hover:opacity-75 transition flex flex-col items-center" data-year="2026"><span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#fb7185] mb-0.5"></span><span id="count-26" class="font-bold">0</span><span class="text-[8px] sm:text-[9px] text-slate-400">26</span></div>
         </div>
     </div>
 
-    <!-- Sağ Alt Katilin Motivasyonu (Mobilde top-28 ile kaynak yazılarının altına indirildi, açık ve net duruyor) -->
-    <div id="motive-analytics-panel" class="absolute top-28 sm:top-24 md:bottom-6 md:top-auto right-4 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-[210px] sm:max-w-xs w-full max-h-[26vh] md:max-h-[calc(100vh-160px)] flex flex-col hidden p-1">
-        <div class="flex justify-between items-center pb-1.5 border-b border-purple-500/20 mb-1.5 shrink-0">
+    <!-- motivasyon paneli -->
+    <div id="motive-analytics-panel" class="absolute top-24 sm:top-24 md:bottom-6 md:top-auto right-3 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-[200px] sm:max-w-xs w-full max-h-[30vh] md:max-h-[calc(100vh-160px)] flex flex-col hidden p-1 bg-plum-950/90 md:bg-transparent backdrop-blur-md md:backdrop-blur-none rounded-xl md:rounded-none border border-purple-500/20 md:border-none shadow-xl md:shadow-none">
+        <div class="flex justify-between items-center pb-1 border-b border-purple-500/20 mb-1 shrink-0">
             <span class="text-slate-100 font-bold text-[10px] sm:text-[11px] tracking-wider" id="i18n-motive-title">katil erkeğin motivasyonu</span>
-            <div class="flex items-center gap-2">
-                <button id="reset-isolation" class="text-[10px] text-purple-300 hover:text-white underline font-medium hidden">[ Filtreyi Kaldır ]</button>
-                <button id="toggle-motive-panel" class="text-slate-300 hover:text-white px-1 py-0.5 rounded font-bold text-xs transition" title="Paneli Küçült / Gizle">▼</button>
+            <div class="flex items-center gap-1.5">
+                <button id="reset-isolation" class="text-[9px] sm:text-[10px] text-purple-300 hover:text-white underline font-medium hidden">[ Filtreyi Kaldır ]</button>
+                <button id="toggle-motive-panel" class="text-slate-300 hover:text-white px-1 py-0.5 rounded font-bold text-xs transition" title="Paneli Küçült / Gizle">▲</button>
             </div>
         </div>
-        <div id="motive-chart-container" class="space-y-1.5 overflow-y-auto pr-1 flex-1 transition-all duration-200"></div>
+        <div id="motive-chart-container" class="space-y-1 overflow-y-auto pr-1 flex-1 transition-all duration-200" style="display: none;"></div>
     </div>
 
-    <!-- Alt Menü Butonları -->
-    <div class="absolute bottom-3 inset-x-0 z-20 flex justify-center pointer-events-none px-3">
-        <div class="pointer-events-auto bg-plum-950/90 border border-purple-500/30 backdrop-blur-xl rounded-full px-4 py-2 flex items-center flex-wrap justify-center gap-2.5 sm:space-x-6 text-xs font-mono shadow-2xl text-slate-200">
+    <!-- alt menü -->
+    <div class="absolute bottom-2.5 inset-x-0 z-20 flex justify-center pointer-events-none px-3">
+        <div class="pointer-events-auto bg-plum-950/90 border border-purple-500/30 backdrop-blur-xl rounded-full px-3.5 py-1.5 flex items-center flex-wrap justify-center gap-2 sm:space-x-6 text-[11px] sm:text-xs font-mono shadow-2xl text-slate-200">
             <button id="btn-years" class="hover:text-white transition tracking-wider font-semibold">YILLAR</button>
             <span class="text-slate-600 hidden sm:inline">|</span>
             <button id="btn-status" class="hover:text-white transition tracking-wider font-semibold">DURUM</button>
@@ -217,9 +217,9 @@
         </div>
     </div>
 
-    <!-- Açılır Filtre Paneli (Drawer) -->
-    <div id="drawer-menu" class="absolute bottom-20 inset-x-0 z-30 flex justify-center pointer-events-none px-4 hidden">
-        <div class="pointer-events-auto bg-plum-950/98 border border-purple-500/30 backdrop-blur-2xl rounded-3xl p-5 max-w-lg w-full max-h-[60vh] overflow-y-auto text-xs font-mono shadow-2xl space-y-4">
+    <!-- filtre çekmecesi -->
+    <div id="drawer-menu" class="absolute bottom-16 inset-x-0 z-30 flex justify-center pointer-events-none px-4 hidden">
+        <div class="pointer-events-auto bg-plum-950/98 border border-purple-500/30 backdrop-blur-2xl rounded-3xl p-4 sm:p-5 max-w-lg w-full max-h-[55vh] overflow-y-auto text-xs font-mono shadow-2xl space-y-3">
             
             <div id="sec-years" class="space-y-2">
                 <span class="text-slate-300 text-[11px] uppercase tracking-widest font-bold" id="i18n-drawer-years">Yıl Seçimi</span>
@@ -276,7 +276,7 @@
         </div>
     </div>
 
-    <!-- Detay Modal Penceresi -->
+    <!-- modal -->
     <div id="modal-overlay" class="fixed inset-0 z-50 modal-overlay flex items-center justify-center p-4 hidden">
         <div class="relative max-w-xl w-full bg-plum-950 border border-purple-500/40 rounded-3xl p-6 sm:p-8 pb-14 space-y-5 shadow-2xl">
             <button id="close-modal" class="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-plum-900 border border-purple-500/40 text-white flex items-center justify-center hover:bg-purple-800 transition text-sm font-bold shadow-lg">✕</button>
@@ -301,7 +301,10 @@
             </div>
 
             <div class="space-y-1">
-                <span id="modal-victim" class="text-xl font-mono text-purple-400 tracking-wider uppercase block font-semibold">Kayıt Detayı</span>
+                <!-- tıklanabilir ve google aramasına giden isim bağlantısı -->
+                <a id="modal-victim-link" href="#" target="_blank" title="Google'da Ara ↗" class="text-xl font-mono text-purple-400 hover:text-purple-200 underline decoration-purple-500/50 hover:decoration-purple-300 tracking-wider uppercase inline-block font-semibold transition cursor-pointer">
+                    <span id="modal-victim">Kayıt Detayı</span> ↗
+                </a>
                 <h2 id="modal-title" class="font-serif text-xs sm:text-2xl font-normal text-slate-100 leading-snug">
                     Vaka Başlığı
                 </h2>
@@ -323,7 +326,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Mantığı & Dil Çevirileri -->
+    <!-- java ve dil -->
     <script>
         let currentLang = 'TR';
         let lastSelectedRecord = null;
@@ -337,10 +340,10 @@
                 when: "NE ZAMAN",
                 who: "KİM / KİŞİ",
                 where: "NEREDE",
-                motive: "BAHANE",
+                motive: "BAHANE / NEDEN",
                 status: "DURUM",
                 defaultWho: "Türkiye Geneli",
-                defaultWhere: "81 İl Açık Veri Tabanlı Arşiv",
+                defaultWhere: "81 İl Archive",
                 defaultMotive: "Erkek Şiddeti & Şüpheli",
                 defaultStatus: "Aktif Veri",
                 source: "Veri Kaynağı:",
@@ -376,9 +379,9 @@
                 quote: `"Space is not merely geography; it is a map of memory, resistance, and the search for justice."`,
                 manifestoText: "This digital archive records the spatial memory of women murdered by male violence and found dead under suspicious circumstances in 81 provinces of Turkey between 2021 and 2026.",
                 when: "WHEN",
-                who: "VICTIM",
+                who: "WHO / VICTIM",
                 where: "WHERE",
-                motive: "MOTIVE",
+                motive: "MOTIVE / REASON",
                 status: "STATUS",
                 defaultWho: "Turkey General",
                 defaultWhere: "81 Provinces Archive",
@@ -414,7 +417,7 @@
         };
 
         function getTranslatedMotive(motiveRaw) {
-            if (!motiveRaw) return currentLang === 'EN' ? 'Unspecified' : 'Belirtilmemiş';
+            if (!motiveRaw) return currentLang === 'EN' ? 'Unspecified / Other' : 'Belirtilmemiş / Diğer';
             if (currentLang === 'TR') return motiveRaw;
 
             const m = motiveRaw.toLowerCase();
@@ -422,11 +425,11 @@
             if (m.includes('boşan') || m.includes('ayrıl') || m.includes('reddedil')) return 'Divorce / Separation Request';
             if (m.includes('kıskanç') || m.includes('ilişki') || m.includes('sadakat')) return 'Jealousy / Relationship Dispute';
             if (m.includes('ekonomik') || m.includes('para') || m.includes('mal')) return 'Economic Reasons';
-            if (m.includes('tartışma') || m.includes('geçimsizlik') || m.includes('laf')) return 'Argument';
+            if (m.includes('tartışma') || m.includes('geçimsizlik') || m.includes('laf')) return 'Argument / Incompatibility';
             if (m.includes('şüpheli')) return 'Suspicious Death';
             if (m.includes('psikolojik')) return 'Psychological Reasons';
             if (m.includes('koruma') || m.includes('uzaklaştırma')) return 'Despite Restraining Order';
-            if (m.includes('namus') || m.includes('töre')) return '"Honor" Killing';
+            if (m.includes('namus') || m.includes('töre')) return 'Honor & Custom Killing';
             if (m.includes('cinsel') || m.includes('tecavüz')) return 'Sexual Assault & Rape';
             if (m.includes('bakıma') || m.includes('hastalık')) return 'Care Dependency & Illness';
             if (m.includes('baskı')) return 'Social Pressure';
@@ -521,7 +524,7 @@
         let searchQuery = '';
         let activeMarkers = [];
         let activeLines = [];
-        let motivePanelCollapsed = false;
+        let motivePanelCollapsed = true;
 
         function extractCleanMotive(item) {
             let m = item.motive;
@@ -554,18 +557,25 @@
             return colors[Math.abs(hash) % colors.length];
         }
 
+        const turkeyBounds = L.latLngBounds(
+            [35.0, 25.5],
+            [42.5, 45.0]
+        );
+
         const map = L.map('map', {
             zoomControl: false,
             center: [39.0, 35.2],
             zoom: 7,
-            minZoom: 5,
-            maxZoom: 18,
+            minZoom: 6,
+            maxZoom: 12,
+            maxBounds: turkeyBounds,
+            maxBoundsViscosity: 1.0,
             preferCanvas: true
         });
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap',
-            maxZoom: 18
+            maxZoom: 12
         }).addTo(map);
 
         async function loadAllData() {
@@ -797,7 +807,13 @@
             document.getElementById('modal-status').textContent = stText || t.femicide;
             
             document.getElementById('modal-motive').textContent = getTranslatedMotive(item.motive);
-            document.getElementById('modal-victim').textContent = item.victim || 'Vaka Kaydı';
+            
+            // isim bağlantısı ve google arama adresi
+            const victimName = item.victim || 'Vaka Kaydı';
+            document.getElementById('modal-victim').textContent = victimName;
+            const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(victimName)}`;
+            document.getElementById('modal-victim-link').href = searchUrl;
+
             document.getElementById('modal-title').textContent = item.city ? `${item.city} (${districtText}) — ${stText}` : 'Vaka Detayı';
             document.getElementById('modal-desc').textContent = `"${item.text || 'Açıklama bulunmuyor.'}"`;
             document.getElementById('modal-coordinates').textContent = `${parseFloat(item.lat).toFixed(4)}° N, ${parseFloat(item.lng).toFixed(4)}° E`;
@@ -847,6 +863,30 @@
         document.getElementById('btn-city').addEventListener('click', () => toggleDrawer('city'));
         document.getElementById('btn-search').addEventListener('click', () => toggleDrawer('search'));
         document.getElementById('close-drawer').addEventListener('click', () => drawer.classList.add('hidden'));
+
+        document.querySelectorAll('.year-filter-box').forEach(box => {
+            box.addEventListener('click', (e) => {
+                const targetYear = box.getAttribute('data-year');
+                if (currentYear === targetYear) {
+                    currentYear = 'all';
+                } else {
+                    currentYear = targetYear;
+                }
+
+                document.querySelectorAll('.year-btn').forEach(b => {
+                    const y = b.getAttribute('data-year');
+                    if (y === currentYear) {
+                        b.classList.remove('bg-plum-900', 'text-slate-200');
+                        b.classList.add('bg-purple-600', 'text-white');
+                    } else {
+                        b.classList.remove('bg-purple-600', 'text-white');
+                        b.classList.add('bg-plum-900', 'text-slate-200');
+                    }
+                });
+
+                renderMarkers();
+            });
+        });
 
         document.querySelectorAll('.year-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
