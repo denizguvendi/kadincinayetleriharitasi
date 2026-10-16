@@ -191,28 +191,28 @@
         </div>
     </div>
 
-    <!-- Sağ Alt Katilin Motivasyonu & İzolasyon (Mobilde üst sağa çakışmayı önleyecek şekilde yerleştirildi) -->
-    <div id="motive-analytics-panel" class="absolute top-36 md:bottom-6 md:top-auto right-4 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-[240px] sm:max-w-sm w-full max-h-[35vh] md:max-h-[calc(100vh-160px)] flex flex-col hidden bg-plum-950/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none p-3 md:p-0 rounded-2xl md:rounded-none border border-purple-500/20 md:border-none shadow-xl md:shadow-none">
-        <div class="flex justify-between items-center pb-2 border-b border-purple-500/20 mb-2 shrink-0">
-            <span class="text-slate-100 font-bold text-[11px] sm:text-xs tracking-wider" id="i18n-motive-title">katil erkeğin motivasyonu</span>
+    <!-- Sağ Alt Katilin Motivasyonu -->
+    <div id="motive-analytics-panel" class="absolute top-32 md:bottom-6 md:top-auto right-4 sm:right-6 z-20 pointer-events-auto text-xs font-mono text-slate-300 max-w-[240px] sm:max-w-xs w-full max-h-[30vh] md:max-h-[calc(100vh-160px)] flex flex-col hidden p-1">
+        <div class="flex justify-between items-center pb-1.5 border-b border-purple-500/20 mb-1.5 shrink-0">
+            <span class="text-slate-100 font-bold text-[11px] tracking-wider" id="i18n-motive-title">katil erkeğin motivasyonu</span>
             <div class="flex items-center gap-2">
-                <button id="reset-isolation" class="text-[11px] text-purple-300 hover:text-white underline font-medium hidden" id="i18n-reset-isolation">[ Filtreyi Kaldır ]</button>
-                <button id="toggle-motive-panel" class="text-slate-300 hover:text-white px-1.5 py-0.5 rounded font-bold text-sm transition" title="Paneli Küçült / Gizle">▼</button>
+                <button id="reset-isolation" class="text-[10px] text-purple-300 hover:text-white underline font-medium hidden">[ Filtreyi Kaldır ]</button>
+                <button id="toggle-motive-panel" class="text-slate-300 hover:text-white px-1 py-0.5 rounded font-bold text-xs transition" title="Paneli Küçült / Gizle">▼</button>
             </div>
         </div>
-        <div id="motive-chart-container" class="space-y-2 overflow-y-auto pr-1 flex-1 transition-all duration-200"></div>
+        <div id="motive-chart-container" class="space-y-1.5 overflow-y-auto pr-1 flex-1 transition-all duration-200"></div>
     </div>
 
     <!-- Alt Menü Butonları -->
     <div class="absolute bottom-3 inset-x-0 z-20 flex justify-center pointer-events-none px-3">
         <div class="pointer-events-auto bg-plum-950/90 border border-purple-500/30 backdrop-blur-xl rounded-full px-4 py-2 flex items-center flex-wrap justify-center gap-2.5 sm:space-x-6 text-xs font-mono shadow-2xl text-slate-200">
-            <button id="btn-years" class="hover:text-white transition tracking-wider font-semibold" id="i18n-btn-years">YILLAR</button>
+            <button id="btn-years" class="hover:text-white transition tracking-wider font-semibold">YILLAR</button>
             <span class="text-slate-600 hidden sm:inline">|</span>
-            <button id="btn-status" class="hover:text-white transition tracking-wider font-semibold" id="i18n-btn-status">DURUM</button>
+            <button id="btn-status" class="hover:text-white transition tracking-wider font-semibold">DURUM</button>
             <span class="text-slate-600 hidden sm:inline">|</span>
-            <button id="btn-city" class="hover:text-white transition tracking-wider font-semibold" id="i18n-btn-city">ŞEHİR</button>
+            <button id="btn-city" class="hover:text-white transition tracking-wider font-semibold">ŞEHİR</button>
             <span class="text-slate-600 hidden sm:inline">|</span>
-            <button id="btn-search" class="hover:text-white transition tracking-wider font-semibold" id="i18n-btn-search">ARAMA</button>
+            <button id="btn-search" class="hover:text-white transition tracking-wider font-semibold">ARAMA</button>
         </div>
     </div>
 
@@ -260,7 +260,6 @@
                     <option value="Samsun">Samsun</option>
                     <option value="Eskişehir">Eskişehir</option>
                     <option value="Şanlıurfa">Şanlıurfa</option>
-                    <option value="Türkiye Geneli" id="i18n-opt-gen-turkey">Türkiye Geneli / Bilinmeyen Lokasyon</option>
                 </select>
             </div>
 
@@ -324,7 +323,8 @@
 
     <!-- JavaScript Mantığı & Dil Çevirileri -->
     <script>
-        let currentLang = 'TR'; // 'TR' veya 'EN'
+        let currentLang = 'TR';
+        let lastSelectedRecord = null;
 
         const translations = {
             TR: {
@@ -337,6 +337,10 @@
                 where: "NEREDE",
                 motive: "BAHANE / NEDEN",
                 status: "DURUM",
+                defaultWho: "Türkiye Geneli",
+                defaultWhere: "81 İl Archive",
+                defaultMotive: "Erkek Şiddeti & Şüpheli",
+                defaultStatus: "Aktif Veri",
                 source: "Veri Kaynağı:",
                 gis: "GIS Arşivi:",
                 casesShown: "Vaka Gösteriliyor",
@@ -362,16 +366,7 @@
                 searchPlaceholder: "İsim, ilçe veya detay ara...",
                 newsSource: "Haber Kaynağı:",
                 go: "Git",
-                motives: {
-                    "Boşanma / Ayrılma Talebi": "Divorce / Separation Request",
-                    "Kıskançlık / İlişki Tartışması": "Jealousy / Relationship Dispute",
-                    "Ekonomik Sebepler": "Economic Reasons",
-                    "Tartışma / Geçimsizlik": "Argument / Incompatibility",
-                    "Şüpheli Ölüm": "Suspicious Death",
-                    "Psikolojik Sebepler": "Psychological Reasons",
-                    "Koruma Kararına Rağmen": "Despite Restraining Order",
-                    "Belirtilmemiş / Diğer": "Unspecified / Other"
-                }
+                center: "Merkez"
             },
             EN: {
                 title: "FEMICIDE MAP OF TURKEY",
@@ -383,6 +378,10 @@
                 where: "WHERE",
                 motive: "MOTIVE / REASON",
                 status: "STATUS",
+                defaultWho: "Turkey General",
+                defaultWhere: "81 Provinces Archive",
+                defaultMotive: "Male Violence & Suspicious",
+                defaultStatus: "Active Data",
                 source: "Data Source:",
                 gis: "GIS Archive:",
                 casesShown: "Cases Shown",
@@ -408,22 +407,50 @@
                 searchPlaceholder: "Search name, district or detail...",
                 newsSource: "News Source:",
                 go: "View",
-                motives: {
-                    "Boşanma / Ayrılma Talebi": "Divorce / Separation Request",
-                    "Kıskançlık / İlişki Tartışması": "Jealousy / Relationship Dispute",
-                    "Ekonomik Sebepler": "Economic Reasons",
-                    "Tartışma / Geçimsizlik": "Argument / Incompatibility",
-                    "Şüpheli Ölüm": "Suspicious Death",
-                    "Psikolojik Sebepler": "Psychological Reasons",
-                    "Koruma Kararına Rağmen": "Despite Restraining Order",
-                    "Belirtilmemiş / Diğer": "Unspecified / Other"
-                }
+                center: "Center"
             }
         };
+
+        // Otomatik Motivasyon Çevirici (Tüm veri varyasyonlarını kapsar)
+        function getTranslatedMotive(motiveRaw) {
+            if (!motiveRaw) return currentLang === 'EN' ? 'Unspecified / Other' : 'Belirtilmemiş / Diğer';
+            if (currentLang === 'TR') return motiveRaw;
+
+            const m = motiveRaw.toLowerCase();
+
+            if (m.includes('boşan') || m.includes('ayrıl') || m.includes('reddedil')) return 'Divorce / Separation Request';
+            if (m.includes('kıskanç') || m.includes('ilişki') || m.includes('sadakat')) return 'Jealousy / Relationship Dispute';
+            if (m.includes('ekonomik') || m.includes('para') || m.includes('mal')) return 'Economic Reasons';
+            if (m.includes('tartışma') || m.includes('geçimsizlik') || m.includes('laf')) return 'Argument / Incompatibility';
+            if (m.includes('şüpheli')) return 'Suspicious Death';
+            if (m.includes('psikolojik')) return 'Psychological Reasons';
+            if (m.includes('koruma') || m.includes('uzaklaştırma')) return 'Despite Restraining Order';
+            if (m.includes('namus') || m.includes('töre')) return 'Honor & Custom Killing';
+            if (m.includes('cinsel') || m.includes('tecavüz')) return 'Sexual Assault & Rape';
+            if (m.includes('bakıma') || m.includes('hastalık')) return 'Care Dependency & Illness';
+            if (m.includes('baskı')) return 'Social Pressure';
+            if (m.includes('nefret')) return 'Hate Crime';
+            if (m.includes('gasp') || m.includes('hırsızlık')) return 'Robbery / Extortion';
+            if (m.includes('kaza')) return 'Accidental Shooting';
+            if (m.includes('husumet')) return 'Hostility / Feud';
+            if (m.includes('aldatma')) return 'Infidelity Suspicion';
+            if (m.includes('aile')) return 'Family Dispute';
+            if (m.includes('hamile')) return 'Pregnancy Related';
+            if (m.includes('kuma')) return 'Second Wife (Kuma) Dispute';
+            if (m.includes('oğluna') || m.includes('engel')) return 'Intervention in Son\'s Dispute';
+            if (m.includes('terkedil')) return 'Being Abandoned';
+            if (m.includes('maganda')) return 'Stray Bullet';
+            if (m.includes('yüksek ses')) return 'Noise Dispute';
+            if (m.includes('tespit edil')) return 'Unidentified Motive';
+            if (m.includes('kadının hayatına dair') || m.includes('kendi hayatı')) return 'Decision Regarding Her Own Life';
+
+            return 'Unspecified / Other';
+        }
 
         function updateUIWithLanguage() {
             const t = translations[currentLang];
 
+            document.getElementById('i18n-title').textContent = t.title;
             document.getElementById('i18n-manifesto-btn').textContent = t.manifestoBtn;
             document.getElementById('i18n-manifesto-quote').textContent = t.quote;
             document.getElementById('i18n-manifesto-text').textContent = t.manifestoText;
@@ -467,6 +494,16 @@
 
             document.getElementById('lang-toggle-btn').textContent = currentLang === 'TR' ? 'EN' : 'TR';
 
+            if (lastSelectedRecord) {
+                updateTopHeader(lastSelectedRecord);
+                openModal(lastSelectedRecord);
+            } else {
+                document.getElementById('col-who').textContent = t.defaultWho;
+                document.getElementById('col-where').textContent = t.defaultWhere;
+                document.getElementById('col-motive').textContent = t.defaultMotive;
+                document.getElementById('col-status').textContent = t.defaultStatus;
+            }
+
             renderMarkers();
         }
 
@@ -496,16 +533,6 @@
                 if (item.status === 'Şüpheli Ölüm') return 'Şüpheli Ölüm';
                 return 'Belirtilmemiş / Diğer';
             }
-            
-            const lower = m.toLowerCase();
-            if (lower.includes('boşan') || lower.includes('ayrıl') || lower.includes('reddedil')) return 'Boşanma / Ayrılma Talebi';
-            if (lower.includes('kıskanç') || lower.includes('sadakat') || lower.includes('ilişki')) return 'Kıskançlık / İlişki Tartışması';
-            if (lower.includes('ekonomik') || lower.includes('para') || lower.includes('mal')) return 'Ekonomik Sebepler';
-            if (lower.includes('tartışma') || lower.includes('geçimsizlik') || lower.includes('laf') || lower.includes('tartism')) return 'Tartışma / Geçimsizlik';
-            if (lower.includes('şüpheli') || lower.includes('aydınlatıl')) return 'Şüpheli Ölüm';
-            if (lower.includes('psikolojik') || lower.includes('duygusal')) return 'Psikolojik Sebepler';
-            if (lower.includes('koruma') || lower.includes('uzaklaştırma')) return 'Koruma Kararına Rağmen';
-
             return m.trim();
         }
 
@@ -542,7 +569,6 @@
 
         async function loadAllData() {
             allDataset = [];
-            
             const dataFiles = ['femicide_arcgis.json'];
 
             for (const file of dataFiles) {
@@ -611,20 +637,17 @@
                 const color = getColorByMotive(motive);
                 const isSelected = isolatedMotive === motive;
 
-                const displayMotive = (currentLang === 'EN' && translations.EN.motives[motive]) 
-                    ? translations.EN.motives[motive] 
-                    : motive;
+                const displayMotive = getTranslatedMotive(motive);
 
                 const row = document.createElement('div');
-                row.className = `cursor-pointer p-1 rounded transition ${isSelected ? 'border-b border-purple-400' : 'hover:opacity-80'}`;
-                row.title = `${displayMotive}: ${count} vaka (${percentage}%)`;
+                row.className = `cursor-pointer p-0.5 rounded transition ${isSelected ? 'border-b border-purple-400' : 'hover:opacity-80'}`;
                 
                 row.innerHTML = `
-                    <div class="flex justify-between text-xs text-slate-200 mb-0.5 font-medium">
-                        <span class="truncate max-w-[180px]" title="${displayMotive}">${displayMotive}</span>
+                    <div class="flex justify-between text-[11px] text-slate-200 mb-0.5 font-medium">
+                        <span class="truncate max-w-[170px]" title="${displayMotive}">${displayMotive}</span>
                         <span class="font-bold ml-1">${count} (${percentage}%)</span>
                     </div>
-                    <div class="w-full bg-plum-900/60 h-1.5 rounded-full overflow-hidden">
+                    <div class="w-full bg-plum-900/60 h-1 rounded-full overflow-hidden">
                         <div class="h-full transition-all duration-300" style="width: ${percentage}%; background-color: ${color};"></div>
                     </div>
                 `;
@@ -726,6 +749,7 @@
                 const marker = L.marker([finalLat, finalLng], { icon: circleIcon }).addTo(map);
 
                 marker.on('click', () => {
+                    lastSelectedRecord = item;
                     openModal(item);
                     updateTopHeader(item);
                 });
@@ -764,16 +788,16 @@
         function openModal(item) {
             const t = translations[currentLang];
             document.getElementById('modal-when').textContent = `${item.year || '2026'} ${item.month || ''}`;
-            document.getElementById('modal-where').textContent = `${item.city || 'Bilinmiyor'} / ${item.district || 'Merkez'}`;
+            
+            const districtText = (item.district && item.district !== 'Merkez') ? item.district : t.center;
+            document.getElementById('modal-where').textContent = `${item.city || 'Bilinmiyor'} / ${districtText}`;
             
             const stText = (item.status === 'Cinayet' || item.status === 'Kadın Cinayeti') ? t.femicide : (item.status === 'Şüpheli Ölüm' ? t.suspicious : item.status);
             document.getElementById('modal-status').textContent = stText || t.femicide;
             
-            const motiveText = (currentLang === 'EN' && t.motives[item.motive]) ? t.motives[item.motive] : (item.motive || '-');
-            document.getElementById('modal-motive').textContent = motiveText;
-            
+            document.getElementById('modal-motive').textContent = getTranslatedMotive(item.motive);
             document.getElementById('modal-victim').textContent = item.victim || 'Vaka Kaydı';
-            document.getElementById('modal-title').textContent = item.city ? `${item.city} (${item.district || 'Merkez'}) — ${stText}` : 'Vaka Detayı';
+            document.getElementById('modal-title').textContent = item.city ? `${item.city} (${districtText}) — ${stText}` : 'Vaka Detayı';
             document.getElementById('modal-desc').textContent = `"${item.text || 'Açıklama bulunmuyor.'}"`;
             document.getElementById('modal-coordinates').textContent = `${parseFloat(item.lat).toFixed(4)}° N, ${parseFloat(item.lng).toFixed(4)}° E`;
 
@@ -794,10 +818,10 @@
             const t = translations[currentLang];
             document.getElementById('col-when').textContent = `${item.year || '2026'} ${item.month || ''}`;
             document.getElementById('col-who').textContent = `${item.victim || 'Kayıt'}`;
-            document.getElementById('col-where').textContent = `${item.city || ''} / ${item.district || ''}`;
             
-            const motiveText = (currentLang === 'EN' && t.motives[item.motive]) ? t.motives[item.motive] : (item.motive || '-');
-            document.getElementById('col-motive').textContent = motiveText;
+            const districtText = (item.district && item.district !== 'Merkez') ? item.district : t.center;
+            document.getElementById('col-where').textContent = `${item.city || ''} / ${districtText}`;
+            document.getElementById('col-motive').textContent = getTranslatedMotive(item.motive);
 
             const stText = (item.status === 'Cinayet' || item.status === 'Kadın Cinayeti') ? t.femicide : (item.status === 'Şüpheli Ölüm' ? t.suspicious : item.status);
             document.getElementById('col-status').textContent = stText || '-';
