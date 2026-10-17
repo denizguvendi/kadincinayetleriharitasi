@@ -107,7 +107,6 @@
             z-index: 9999 !important;
         }
 
-        /* Modal Düzeltmesi: Kutular ve Sınırlar Silindi, Şeffaf Blur Overlay */
         .modal-overlay {
             background: rgba(10, 6, 18, 0.82);
             backdrop-filter: blur(12px);
@@ -238,42 +237,9 @@
         </button>
     </div>
 
-    <!-- Kayan Slogan Bandı (Marquee Banner) -->
+    <!-- Kayan Slogan Bandı -->
     <div class="fixed bottom-0 inset-x-0 z-20 bg-plum-950/90 border-t border-purple-500/10 py-0.5 overflow-hidden font-mono text-[9px] text-purple-300/80 tracking-widest uppercase pointer-events-none">
-        <div class="whitespace-nowrap flex animate-marquee space-x-8">
-            <span>ISTANBUL SÖZLEŞMESİ YAŞATIR</span>
-            <span>•</span>
-            <span>KADIN CİNAYETLERİNİ DURDURACAĞIZ</span>
-            <span>•</span>
-            <span>ASLA YALNIZ YÜRÜMEYECEKSİN</span>
-            <span>•</span>
-            <span>6284'Ü UYGULA</span>
-            <span>•</span>
-            <span>JIN, JIYAN, AZADÎ</span>
-            <span>•</span>
-            <span>KADINLAR BİRLİKTE GÜÇLÜ</span>
-            <span>•</span>
-            <span>ŞİDDETE KARŞI SIFIR TOLERANS</span>
-            <span>•</span>
-            <span>GECELERİ DE SOKAKLARI DA MEYDANLARI DA TERK ET MİYORUZ</span>
-            <span>•</span>
-            <!-- tekrarlayan döngü -->
-            <span>ISTANBUL SÖZLEŞMESİ YAŞATIR</span>
-            <span>•</span>
-            <span>KADIN CİNAYETLERİNİ DURDURACAĞIZ</span>
-            <span>•</span>
-            <span>ASLA YALNIZ YÜRÜMEYECEKSİN</span>
-            <span>•</span>
-            <span>6284'Ü UYGULA</span>
-            <span>•</span>
-            <span>JIN, JIYAN, AZADÎ</span>
-            <span>•</span>
-            <span>KADINLAR BİRLİKTE GÜÇLÜ</span>
-            <span>•</span>
-            <span>ŞİDDETE KARŞI SIFIR TOLERANS</span>
-            <span>•</span>
-            <span>GECELERİ DE SOKAKLARI DA MEYDANLARI DA TERK ET MİYORUZ</span>
-        </div>
+        <div class="whitespace-nowrap flex animate-marquee space-x-8" id="marquee-text-container"></div>
     </div>
 
     <!-- şeffaf arama inputu -->
@@ -283,7 +249,7 @@
         </div>
     </div>
 
-    <!-- Modal (Kutulardan Arındırılmış Tam Transparan Overlay) -->
+    <!-- Modal -->
     <div id="modal-overlay" class="fixed inset-0 z-50 modal-overlay flex items-center justify-center p-4 hidden">
         <div class="relative max-w-xl w-full p-2 sm:p-4 space-y-4 text-slate-100">
             <button id="close-modal" class="absolute -top-6 right-0 text-slate-400 hover:text-white transition font-mono text-xl font-bold">✕</button>
@@ -311,14 +277,10 @@
                 <a id="modal-victim-link" href="#" target="_blank" title="Search ↗" class="text-xl sm:text-2xl font-mono text-purple-300 hover:text-white tracking-wider uppercase inline-block font-semibold transition cursor-pointer">
                     <span id="modal-victim">Kayıt Detayı</span> ↗
                 </a>
-                <h2 id="modal-title" class="font-serif text-sm sm:text-xl font-normal text-slate-200 leading-snug">
-                    Vaka Başlığı
-                </h2>
             </div>
 
             <div class="py-2">
                 <p id="modal-desc" class="font-sans text-xs sm:text-sm text-slate-200 leading-relaxed max-h-56 overflow-y-auto pr-2">
-                    Rapor açıklaması yükleniyor...
                 </p>
             </div>
 
@@ -332,10 +294,11 @@
         </div>
     </div>
 
-    <!-- JavaScript & İyileştirilmiş Çeviri (i18n) Mimarisi -->
+    <!-- JavaScript & Sınır Aşımını Önleyen Çeviri Motoru -->
     <script>
         let currentLang = 'TR';
         let lastSelectedRecord = null;
+        const translationCache = {};
 
         const translations = {
             TR: {
@@ -371,7 +334,18 @@
                 searchPlaceholder: "İsim, ilçe veya detay ara...",
                 newsSource: "Haber Kaynağı:",
                 go: "Git",
-                center: "Merkez"
+                center: "Merkez",
+                translating: "Çevriliyor...",
+                slogans: [
+                    "İSTANBUL SÖZLEŞMESİ YAŞATIR",
+                    "KADIN CİNAYETLERİNİ DURDURACAĞIZ",
+                    "ASLA YALNIZ YÜRÜMEYECEKSİN",
+                    "6284'Ü UYGULA",
+                    "JİN, JİYAN, AZADÎ",
+                    "KADINLAR BİRLİKTE GÜÇLÜ",
+                    "ŞİDDETE KARŞI SIFIR TOLERANS",
+                    "GECELERİ DE SOKAKLARI DA MEYDANLARI DA TERK ETMİYORUZ"
+                ]
             },
             EN: {
                 title: "FEMICIDE MAP OF TURKEY",
@@ -406,9 +380,77 @@
                 searchPlaceholder: "Search name, district or detail...",
                 newsSource: "News Source:",
                 go: "View",
-                center: "Center"
+                center: "Center",
+                translating: "Translating...",
+                slogans: [
+                    "ISTANBUL CONVENTION KEEPS US ALIVE",
+                    "WE WILL STOP FEMICIDES",
+                    "YOU'LL NEVER WALK ALONE",
+                    "ENFORCE LAW 6284",
+                    "JIN, JIYAN, AZADÎ",
+                    "WOMEN STRONGER TOGETHER",
+                    "ZERO TOLERANCE TO VIOLENCE",
+                    "WE WILL SURRENDER NEITHER THE NIGHTS NOR THE STREETS"
+                ]
             }
         };
+
+        // Tekil parçayı MyMemory üzerinden çeviren yardımcı fonksiyon
+        async function translateSingleChunk(chunk, targetLang) {
+            try {
+                const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=tr|${targetLang}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.responseData && data.responseData.translatedText) {
+                        const txt = data.responseData.translatedText;
+                        if (!txt.includes("QUERY LENGTH LIMIT EXCEEDED")) {
+                            return txt;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.warn("MyMemory parçalama hatası:", e);
+            }
+            return chunk;
+        }
+
+        // 500 karakter sınırını aşmamak için metni cümle/parça bazlı bölüp çeviren ana fonksiyon
+        async function fetchAutoTranslation(text, targetLang = 'en') {
+            if (!text || text.trim() === '') return '';
+            const cacheKey = `${targetLang}_${text}`;
+            if (translationCache[cacheKey]) return translationCache[cacheKey];
+
+            // Metin 400 karakterden kısa ise tek seferde gönder
+            if (text.length <= 400) {
+                const res = await translateSingleChunk(text, targetLang);
+                translationCache[cacheKey] = res;
+                return res;
+            }
+
+            // Metin uzunsa 400 karakterlik parçalara böl (cümle sonlarından ayrıştırarak)
+            const chunks = [];
+            let current = '';
+            const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+
+            for (let sentence of sentences) {
+                if ((current + sentence).length > 400) {
+                    if (current) chunks.push(current);
+                    current = sentence;
+                } else {
+                    current += sentence;
+                }
+            }
+            if (current) chunks.push(current);
+
+            try {
+                const translatedChunks = await Promise.all(chunks.map(c => translateSingleChunk(c, targetLang)));
+                const fullTranslation = translatedChunks.join(' ');
+                translationCache[cacheKey] = fullTranslation;
+                return fullTranslation;
+            } catch (e) {
+                return text;
+            }
+        }
 
         function getTranslatedMotive(motiveRaw) {
             if (!motiveRaw) return currentLang === 'EN' ? 'Unspecified / Other' : 'Belirtilmemiş / Diğer';
@@ -445,6 +487,18 @@
             return 'Unspecified / Other';
         }
 
+        function updateMarquee() {
+            const container = document.getElementById('marquee-text-container');
+            const slogans = translations[currentLang].slogans;
+            let html = '';
+            for (let i = 0; i < 2; i++) {
+                slogans.forEach(slogan => {
+                    html += `<span>${slogan}</span><span>•</span>`;
+                });
+            }
+            container.innerHTML = html;
+        }
+
         function updateUIWithLanguage() {
             const t = translations[currentLang];
 
@@ -474,6 +528,8 @@
             document.getElementById('i18n-modal-go').textContent = t.go;
 
             document.getElementById('lang-toggle-btn').textContent = currentLang === 'TR' ? 'EN' : 'TR';
+
+            updateMarquee();
 
             if (lastSelectedRecord) {
                 updateTopHeader(lastSelectedRecord);
@@ -772,7 +828,7 @@
             document.getElementById('filter-status-text').textContent = `${t.filterPrefix} (${yearText}) | ${t.status} (${statusText}) | ${t.city} (${cityText})`;
         }
 
-        function openModal(item) {
+        async function openModal(item) {
             const t = translations[currentLang];
             document.getElementById('modal-when').textContent = `${item.year || '2026'} ${item.month || ''}`;
             
@@ -789,8 +845,20 @@
             const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(victimName)}`;
             document.getElementById('modal-victim-link').href = searchUrl;
 
-            document.getElementById('modal-title').textContent = item.city ? `${item.city} (${districtText}) — ${stText}` : 'Vaka Detayı';
-            document.getElementById('modal-desc').textContent = `"${item.text || 'Açıklama bulunmuyor.'}"`;
+            // Haber Metni Çevirisi (Sınır aşımını engelleyen parça yapısıyla)
+            const descElem = document.getElementById('modal-desc');
+            const rawText = item.text ? item.text.trim() : '';
+
+            if (!rawText || rawText === 'Açıklama bulunmuyor.' || rawText === '"Açıklama bulunmuyor."') {
+                descElem.textContent = '';
+            } else if (currentLang === 'EN') {
+                descElem.textContent = `"${t.translating}"`;
+                const translatedText = await fetchAutoTranslation(rawText, 'en');
+                descElem.textContent = `"${translatedText}"`;
+            } else {
+                descElem.textContent = `"${rawText}"`;
+            }
+
             document.getElementById('modal-coordinates').textContent = `${parseFloat(item.lat).toFixed(4)}° N, ${parseFloat(item.lng).toFixed(4)}° E`;
 
             const sourceContainer = document.getElementById('modal-source-container');
@@ -874,6 +942,7 @@
 
         window.onload = function() {
             loadAllData();
+            updateMarquee();
         };
     </script>
 </body>
